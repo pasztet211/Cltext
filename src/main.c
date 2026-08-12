@@ -5,6 +5,7 @@
 #include <SDL2/SDL_ttf.h>
 
 #include "parser.h"
+#include "animations.h"
 
 #define FONT_SIZE 14
 #define LINE_SPACING 6
@@ -147,91 +148,113 @@ int main(int argc, char *argv[]) {
             }
         }
 
+        float time = SDL_GetTicks() / 1000.0f;
+
         SDL_SetRenderDrawColor(renderer, 20, 20, 20, 255);
         SDL_RenderClear(renderer);
 
         int x = 20;
         int y = 20;
 
-    for (int i = 0; i < segment_count; i++) {
-    TTF_Font *font;
+        for (int i = 0; i < segment_count; i++) {
 
-    if (segments[i].style == STYLE_BOLD) {
-        font = bold_font;
-    } else if (segments[i].style == STYLE_TILT) {
-        font = italic_font;
-    } else {
-        font = normal_font;
-    }
+            TTF_Font *font;
 
-    char *start = segments[i].text;
-
-    while (*start != '\0') {
-        char *newline = strpbrk(start, "\r\n");
-
-        size_t length;
-
-        if (newline != NULL) {
-            length = (size_t)(newline - start);
-        } else {
-            length = strlen(start);
-        }
-
-        if (length > 0) {
-            char *line_text = malloc(length + 1);
-
-            if (line_text == NULL) {
-                printf("Memory allocation failed.\n");
-                break;
+            if (segments[i].style == STYLE_BOLD) {
+                font = bold_font;
+            }
+            else if (segments[i].style == STYLE_TILT) {
+                font = italic_font;
+            }
+            else {
+                font = normal_font;
             }
 
-            memcpy(line_text, start, length);
-            line_text[length] = '\0';
+            char *text_start = segments[i].text;
+            int character_index = 0;
 
-            SDL_Surface *surface =
-                TTF_RenderUTF8_Blended(font, line_text, white);
+            while (*text_start != '\0') {
 
-            free(line_text);
+                /* Handle newlines */
+                if (*text_start == '\n') {
+                    x = 20;
+                    y += FONT_SIZE + LINE_SPACING;
+                    text_start++;
+                    character_index = 0;
+                    continue;
+                }
 
-            if (surface == NULL) {
-                printf("Text rendering error: %s\n", TTF_GetError());
-                break;
+                if (*text_start == '\r') {
+                    text_start++;
+                    continue;
+                }
+
+                /*
+                * For now we handle one byte/character at a time.
+                * This is perfect for normal ASCII text.
+                */
+                char character[2];
+
+                character[0] = *text_start;
+                character[1] = '\0';
+
+                float scale = 1.0f;
+
+                if (segments[i].style == STYLE_WAVE) {
+                    scale = wave_scale(
+                        segments[i].amount,
+                        time,
+                        character_index
+                    );
+                }
+
+                SDL_Surface *surface =
+                    TTF_RenderUTF8_Blended(font, character, white);
+
+                if (surface == NULL) {
+                    printf(
+                        "Text rendering error: %s\n",
+                        TTF_GetError()
+                    );
+                    break;
+                }
+
+                SDL_Texture *texture =
+                    SDL_CreateTextureFromSurface(
+                        renderer,
+                        surface
+                    );
+
+                int width = (int)(surface->w * scale);
+                int height = (int)(surface->h * scale);
+
+                SDL_Rect rect = {
+                    x,
+                    y + (surface->h - height) / 2,
+                    width,
+                    height
+                };
+
+                SDL_RenderCopy(
+                    renderer,
+                    texture,
+                    NULL,
+                    &rect
+                );
+
+                /*
+                * Advance by the ORIGINAL character width,
+                * not the scaled width.
+                */
+                x += surface->w;
+
+                SDL_DestroyTexture(texture);
+                SDL_FreeSurface(surface);
+
+                text_start++;
+                character_index++;
             }
-
-            SDL_Texture *texture =
-                SDL_CreateTextureFromSurface(renderer, surface);
-
-            SDL_Rect rect = {
-                x,
-                y,
-                surface->w,
-                surface->h
-            };
-
-            SDL_RenderCopy(renderer, texture, NULL, &rect);
-
-            x += surface->w;
-
-            SDL_DestroyTexture(texture);
-            SDL_FreeSurface(surface);
         }
-
-        if (newline == NULL) {
-            break;
-        }
-
-        // Move to the next line.
-        x = 20;
-        y += FONT_SIZE + LINE_SPACING;
-
-        // Skip \r\n together, or just one newline character.
-        if (*newline == '\r' && newline[1] == '\n') {
-            start = newline + 2;
-        } else {
-            start = newline + 1;
-        }
-    }
-}
         SDL_RenderPresent(renderer);
     }
 

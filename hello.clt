@@ -1,2 +1,3 @@
-<bold>Hello, world!</bold>
-This is <tilt>Cltext</tilt>.
+<bold>Hello, world!</bold> That text was <bold>BOLD</bold>
+This is <tilt>italic</tilt>.
+<wave a=0.5>oooh wavey</wave>
