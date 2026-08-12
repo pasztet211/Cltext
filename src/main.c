@@ -1,7 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
+
+#include "parser.h"
 
 #define FONT_SIZE 14
 #define LINE_SPACING 6
@@ -41,6 +44,15 @@ int main(int argc, char *argv[]) {
     text[length] = '\0';
 
     fclose(file);
+
+    TextSegment *segments;
+    int segment_count = parse_text(text, &segments);
+
+    if (segment_count < 0) {
+        printf("Parser error.\n");
+        free(text);
+        return 1;
+    }
 
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         printf("SDL_Init error: %s\n", SDL_GetError());
@@ -87,105 +99,35 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    TTF_Font *font = TTF_OpenFont(
+    TTF_Font *normal_font = TTF_OpenFont(
         "C:\\Windows\\Fonts\\arial.ttf",
         FONT_SIZE
     );
 
-    if (font == NULL) {
+    TTF_Font *bold_font = TTF_OpenFont(
+        "C:\\Windows\\Fonts\\arialbd.ttf",
+        FONT_SIZE
+    );
+
+    if (normal_font == NULL || bold_font == NULL) {
         printf("Font error: %s\n", TTF_GetError());
+
+        if (normal_font != NULL)
+            TTF_CloseFont(normal_font);
+
+        if (bold_font != NULL)
+            TTF_CloseFont(bold_font);
+
         SDL_DestroyRenderer(renderer);
         SDL_DestroyWindow(window);
         TTF_Quit();
         SDL_Quit();
         free(text);
+
         return 1;
     }
 
     SDL_Color white = {255, 255, 255, 255};
-
-    int line_count = 1;
-
-    for (size_t i = 0; i < length; i++) {
-        if (text[i] == '\n') {
-            line_count++;
-        }
-    }
-
-    SDL_Texture **textures =
-        malloc(sizeof(SDL_Texture *) * line_count);
-
-    SDL_Rect *rects =
-        malloc(sizeof(SDL_Rect) * line_count);
-
-    if (textures == NULL || rects == NULL) {
-        printf("Memory allocation failed.\n");
-
-        free(textures);
-        free(rects);
-        TTF_CloseFont(font);
-        SDL_DestroyRenderer(renderer);
-        SDL_DestroyWindow(window);
-        TTF_Quit();
-        SDL_Quit();
-        free(text);
-
-        return 1;
-    }
-
-    int line = 0;
-    char *start = text;
-
-    for (size_t i = 0; i <= length; i++) {
-        if (text[i] == '\n' || text[i] == '\0') {
-
-            char saved = text[i];
-            text[i] = '\0';
-
-            // Remove Windows CR from CRLF newlines
-            if (i > 0 && text[i - 1] == '\r') {
-                text[i - 1] = '\0';
-            }
-
-            SDL_Surface *surface =
-                TTF_RenderUTF8_Blended(font, start, white);
-
-            if (surface == NULL) {
-                printf("Text rendering error: %s\n", TTF_GetError());
-
-                for (int j = 0; j < line; j++) {
-                    SDL_DestroyTexture(textures[j]);
-                }
-
-                free(textures);
-                free(rects);
-                TTF_CloseFont(font);
-                SDL_DestroyRenderer(renderer);
-                SDL_DestroyWindow(window);
-                TTF_Quit();
-                SDL_Quit();
-                free(text);
-
-                return 1;
-            }
-
-            textures[line] =
-                SDL_CreateTextureFromSurface(renderer, surface);
-
-            rects[line].x = 20;
-            rects[line].y =
-                20 + line * (FONT_SIZE + LINE_SPACING);
-            rects[line].w = surface->w;
-            rects[line].h = surface->h;
-
-            SDL_FreeSurface(surface);
-
-            line++;
-
-            text[i] = saved;
-            start = &text[i + 1];
-        }
-    }
 
     int running = 1;
     SDL_Event event;
@@ -200,32 +142,99 @@ int main(int argc, char *argv[]) {
         SDL_SetRenderDrawColor(renderer, 20, 20, 20, 255);
         SDL_RenderClear(renderer);
 
-        for (int i = 0; i < line_count; i++) {
-            SDL_RenderCopy(
-                renderer,
-                textures[i],
-                NULL,
-                &rects[i]
-            );
+        int x = 20;
+        int y = 20;
+
+    for (int i = 0; i < segment_count; i++) {
+    TTF_Font *font;
+
+    if (segments[i].style == STYLE_BOLD) {
+        font = bold_font;
+    } else {
+        font = normal_font;
+    }
+
+    char *start = segments[i].text;
+
+    while (*start != '\0') {
+        char *newline = strpbrk(start, "\r\n");
+
+        size_t length;
+
+        if (newline != NULL) {
+            length = (size_t)(newline - start);
+        } else {
+            length = strlen(start);
         }
 
+        if (length > 0) {
+            char *line_text = malloc(length + 1);
+
+            if (line_text == NULL) {
+                printf("Memory allocation failed.\n");
+                break;
+            }
+
+            memcpy(line_text, start, length);
+            line_text[length] = '\0';
+
+            SDL_Surface *surface =
+                TTF_RenderUTF8_Blended(font, line_text, white);
+
+            free(line_text);
+
+            if (surface == NULL) {
+                printf("Text rendering error: %s\n", TTF_GetError());
+                break;
+            }
+
+            SDL_Texture *texture =
+                SDL_CreateTextureFromSurface(renderer, surface);
+
+            SDL_Rect rect = {
+                x,
+                y,
+                surface->w,
+                surface->h
+            };
+
+            SDL_RenderCopy(renderer, texture, NULL, &rect);
+
+            x += surface->w;
+
+            SDL_DestroyTexture(texture);
+            SDL_FreeSurface(surface);
+        }
+
+        if (newline == NULL) {
+            break;
+        }
+
+        // Move to the next line.
+        x = 20;
+        y += FONT_SIZE + LINE_SPACING;
+
+        // Skip \r\n together, or just one newline character.
+        if (*newline == '\r' && newline[1] == '\n') {
+            start = newline + 2;
+        } else {
+            start = newline + 1;
+        }
+    }
+}
         SDL_RenderPresent(renderer);
     }
 
-    for (int i = 0; i < line_count; i++) {
-        SDL_DestroyTexture(textures[i]);
-    }
+    TTF_CloseFont(bold_font);
+    TTF_CloseFont(normal_font);
 
-    free(textures);
-    free(rects);
-
-    TTF_CloseFont(font);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
 
     TTF_Quit();
     SDL_Quit();
 
+    free_segments(segments, segment_count);
     free(text);
 
     return 0;
