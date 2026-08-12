@@ -1,8 +1,32 @@
+![C23](https://img.shields.io/badge/C-C23-blue?style=flat-square)
+![SDL2](https://img.shields.io/badge/SDL2-required-green?style=flat-square)
+![SDL2_ttf](https://img.shields.io/badge/SDL2__ttf-required-green?style=flat-square)
+
+![version](https://img.shields.io/badge/version-v0.0.3-orange?style=flat-square)
+
 # Cltext
 
 markup language
 
-## Installation
+## Installation and file extension:
 
 1. clone the repo to `C:\Cltext`
 2. add `C:\Cltext` to **PATH**
+3. the file extension for ***Cltext*** is `.clt`
+
+## Usage:
+
+- any text inside a `.clt` file gets rendered
+
+### Basic tags ![works](https://img.shields.io/badge/status-stable-green?style=flat-square)
+
+- to make a text **BOLD** use `<bold>your text</bold>`
+- to make a text *italic* use `<tilt>your text</tilt>`
+
+### Animated tags: ![works](https://img.shields.io/badge/status-beta-yellow?style=flat-square)
+
+- wavy text can be made using `<wave a=amount>your text</wave>`
+
+# Made by:
+
+- [pasztet211](https://github.com/pasztet211) ![pasztet](https://img.shields.io/badge/creator-orange?style=flat-square)
