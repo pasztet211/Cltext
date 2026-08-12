@@ -109,7 +109,12 @@ int main(int argc, char *argv[]) {
         FONT_SIZE
     );
 
-    if (normal_font == NULL || bold_font == NULL) {
+    TTF_Font *italic_font = TTF_OpenFont(
+        "C:\\Windows\\Fonts\\ariali.ttf",
+        FONT_SIZE
+    );
+
+    if (normal_font == NULL || bold_font == NULL || italic_font == NULL) {
         printf("Font error: %s\n", TTF_GetError());
 
         if (normal_font != NULL)
@@ -118,13 +123,16 @@ int main(int argc, char *argv[]) {
         if (bold_font != NULL)
             TTF_CloseFont(bold_font);
 
+        if (italic_font != NULL)
+            TTF_CloseFont(italic_font);
+
         SDL_DestroyRenderer(renderer);
         SDL_DestroyWindow(window);
         TTF_Quit();
         SDL_Quit();
         free(text);
 
-        return 1;
+        return 2;
     }
 
     SDL_Color white = {255, 255, 255, 255};
@@ -150,6 +158,8 @@ int main(int argc, char *argv[]) {
 
     if (segments[i].style == STYLE_BOLD) {
         font = bold_font;
+    } else if (segments[i].style == STYLE_TILT) {
+        font = italic_font;
     } else {
         font = normal_font;
     }
