@@ -51,18 +51,18 @@ cltext [-v | --version]
 - to make a text **BOLD** use `<bold>your text</bold>`
 - to make a text *italic* use `<tilt>your text</tilt>`
 
-### Animated tags: ![works](https://img.shields.io/badge/status-beta-yellow?style=flat-square)
+### Animated tags: ![works](https://img.shields.io/badge/status-stable-green?style=flat-square)
 
 - wavy text can be made using `<wave a=amount>your text</wave>`
 - bouncy text can be made using `<bounce a=amount>your text</bounce>`
 - text that shakes can be made using `<shake a=amount>your text</shake>`
 - to color text use `<color c="#ffffff>your text</color>`
 
-### Document tags: ![works](https://img.shields.io/badge/status-beta-yellow?style=flat-square)
+### Document tags: ![works](https://img.shields.io/badge/status-stable-green?style=flat-square)
 
 - changing the document bg color can be done using `<bgcolor c="#ff0000">`
 
-### Comments: ![works](https://img.shields.io/badge/status-stable-green?style=flat-square)[^first]
+### Comments: ![works](https://img.shields.io/badge/status-stable-green?style=flat-square)
 
 - to add a comment use `<?== comment ==?>`
 
