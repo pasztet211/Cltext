@@ -1,3 +1,7 @@
 there is this <bold><wave a=1>thingy</wave></bold> called a <bold>particle</bold>
 it is very <tilt>small.</tilt>
+<?==
+ comment 
+==?>
 <bold>it is <wave a=0.5>part of an <bounce a=0.5>atom</bounce></wave>.</bold>
+<?== other comment ==?>

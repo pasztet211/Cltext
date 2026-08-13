@@ -66,6 +66,18 @@ int parse_text(const char *input, TextSegment **segments) {
     const char *pos = input;
 
     while (*pos != '\0') {
+        if (strncmp(pos, "<?==", 4) == 0) {
+            const char *comment_end = strstr(pos + 4, "==?>");
+
+            if (comment_end != NULL) {
+                pos = comment_end + 4;
+                text_start = pos;
+                continue;
+            }
+
+            break;
+        }
+        
         if (*pos != '<') {
             pos++;
             continue;
