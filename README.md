@@ -2,7 +2,7 @@
 ![SDL2](https://img.shields.io/badge/SDL2-required-green?style=flat-square)
 ![SDL2_ttf](https://img.shields.io/badge/SDL2__ttf-required-green?style=flat-square)
 
-![version](https://img.shields.io/badge/version-v0.0.3-orange?style=flat-square)
+![version](https://img.shields.io/badge/version-v0.0.4-orange?style=flat-square)
 
 # Cltext
 
@@ -26,6 +26,7 @@ markup language
 ### Animated tags: ![works](https://img.shields.io/badge/status-beta-yellow?style=flat-square)
 
 - wavy text can be made using `<wave a=amount>your text</wave>`
+- bouncy text can be made using `<bounce a-amount>your text</bounce>`
 
 # Made by:
 
