@@ -61,10 +61,12 @@ cltext [-v | --version]
 
 - changing the document bg color can be done using `<bgcolor c="#ff0000">`
 
-### Comments: ![works](https://img.shields.io/badge/status-stable-green?style=flat-square)
+### Comments: ![works](https://img.shields.io/badge/status-stable-green?style=flat-square)[^first]
 
 - to add a comment use `<?== comment ==?>`
 
 # Made by:
 
 - [pasztet211](https://github.com/pasztet211) ![pasztet](https://img.shields.io/badge/creator-orange?style=flat-square)
+
+[^first]: i recomend putting these on the ***end*** of files
