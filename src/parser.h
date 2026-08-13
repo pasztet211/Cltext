@@ -5,7 +5,8 @@ typedef enum {
     STYLE_NORMAL,
     STYLE_BOLD,
     STYLE_TILT,
-    STYLE_WAVE
+    STYLE_WAVE,
+    STYLE_BOUNCE
 } TextStyle;
 
 typedef struct {

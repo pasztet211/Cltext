@@ -121,6 +121,20 @@ int parse_text(const char *input, TextSegment **segments) {
                 current_style = STYLE_NORMAL;
                 current_amount = 0.0f;
             }
+            else if (strncmp(tag, "bounce", 6) == 0) {
+                current_style = STYLE_BOUNCE;
+                current_amount = 1.0f;
+
+                char *a = strstr(tag, "a=");
+
+                if (a != NULL) {
+                    current_amount = strtof(a + 2, NULL);
+                }
+            }
+            else if (strcmp(tag, "/bounce") == 0) {
+                current_style = STYLE_NORMAL;
+                current_amount = 0.0f;
+            }
             else {
                 add_segment(
                     segments,

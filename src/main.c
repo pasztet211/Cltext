@@ -199,9 +199,17 @@ int main(int argc, char *argv[]) {
                 character[1] = '\0';
 
                 float scale = 1.0f;
+                float height_b = 0.0f;
 
                 if (segments[i].style == STYLE_WAVE) {
                     scale = wave_scale(
+                        segments[i].amount,
+                        time,
+                        character_index
+                    );
+                }
+                else if (segments[i].style == STYLE_BOUNCE) {
+                    height_b = bounce_height(
                         segments[i].amount,
                         time,
                         character_index
@@ -226,11 +234,11 @@ int main(int argc, char *argv[]) {
                     );
 
                 int width = (int)(surface->w * scale);
-                int height = (int)(surface->h * scale);
+                float height = (int)(surface->h * scale);
 
                 SDL_Rect rect = {
                     x,
-                    y + (surface->h - height) / 2,
+                    y + (surface->h - height) / 2 - height_b,
                     width,
                     height
                 };
