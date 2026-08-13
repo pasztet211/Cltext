@@ -55,6 +55,7 @@ cltext [-v | --version]
 
 - wavy text can be made using `<wave a=amount>your text</wave>`
 - bouncy text can be made using `<bounce a=amount>your text</bounce>`
+- text that shakes can be made using `<shake a=amount>your text</shake>`
 
 ### Comments: ![works](https://img.shields.io/badge/status-stable-green?style=flat-square)
 
