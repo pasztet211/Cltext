@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <SDL2/SDL.h>
 
 #include "parser.h"
 
@@ -49,7 +50,7 @@ static void add_segment(
     (*count)++;
 }
 
-int parse_text(const char *input, TextSegment **segments) {
+int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor) {
     int capacity = 8;
     int count = 0;
 
@@ -69,6 +70,11 @@ int parse_text(const char *input, TextSegment **segments) {
     const char *pos = input;
 
     while (*pos != '\0') {
+        if (*pos != '<') {
+            pos++;
+            continue;
+        }
+
         if (strncmp(pos, "<?==", 4) == 0) {
             const char *comment_end = strstr(pos + 4, "==?>");
 
@@ -79,11 +85,6 @@ int parse_text(const char *input, TextSegment **segments) {
             }
 
             break;
-        }
-        
-        if (*pos != '<') {
-            pos++;
-            continue;
         }
 
         const char *tag_end = strchr(pos, '>');
@@ -167,6 +168,18 @@ int parse_text(const char *input, TextSegment **segments) {
                 current_style &= ~STYLE_SHAKE;
                 current_shake_amount = 0.0f;
             }
+            else if (strncmp(tag, "bgcolor", 7) == 0) {
+                char bg_color[8] = "";
+
+                char *c = strstr(tag, "c=\"");
+
+                if (c != NULL) {
+                    strncpy(bg_color, c + 3, 7);
+                    bg_color[7] = '\0';
+
+                    *bgcolor = hex_to_sdl_color(bg_color);
+                }
+            }
             else {
                 add_segment(
                     segments,
@@ -207,4 +220,21 @@ void free_segments(TextSegment *segments, int count) {
     }
 
     free(segments);
+}
+
+SDL_Color hex_to_sdl_color(const char *hex)
+{
+    SDL_Color color = {0, 0, 0, 255};
+
+    if (hex == NULL || hex[0] != '#' || strlen(hex) != 7) {
+        return color;
+    }
+
+    unsigned long value = strtoul(hex + 1, NULL, 16);
+
+    color.r = (value >> 16) & 0xFF;
+    color.g = (value >> 8) & 0xFF;
+    color.b = value & 0xFF;
+
+    return color;
 }

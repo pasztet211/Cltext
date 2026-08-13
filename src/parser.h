@@ -1,6 +1,8 @@
 #ifndef PARSER_H
 #define PARSER_H
 
+#include <SDL2/SDL.h>
+
 typedef enum {
     STYLE_NORMAL = 0,
     STYLE_BOLD   = 1 << 0,
@@ -19,8 +21,10 @@ typedef struct {
     float shake_amount;
 } TextSegment;
 
-int parse_text(const char *input, TextSegment **segments);
+int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor);
 
 void free_segments(TextSegment *segments, int count);
+
+SDL_Color hex_to_sdl_color(const char *hex);
 
 #endif

@@ -54,7 +54,8 @@ int main(int argc, char *argv[]) {
     fclose(file);
 
     TextSegment *segments;
-    int segment_count = parse_text(text, &segments);
+    SDL_Color bgcolor = {20, 20, 20, 255};
+    int segment_count = parse_text(text, &segments, &bgcolor);
 
     if (segment_count < 0) {
         printf("Parser error.\n");
@@ -173,7 +174,14 @@ int main(int argc, char *argv[]) {
 
         float time = SDL_GetTicks() / 1000.0f;
 
-        SDL_SetRenderDrawColor(renderer, 20, 20, 20, 255);
+        SDL_SetRenderDrawColor(
+            renderer,
+            bgcolor.r,
+            bgcolor.g,
+            bgcolor.b,
+            bgcolor.a
+        );
+
         SDL_RenderClear(renderer);
 
         int x = 20;
