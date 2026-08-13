@@ -17,6 +17,10 @@ markup language
 ## Usage:
 
 - any text inside a `.clt` file gets rendered
+- to open a `.clt` file use 
+```bash
+cltext filename.clt
+```
 
 ### Basic tags ![works](https://img.shields.io/badge/status-stable-green?style=flat-square)
 
@@ -26,7 +30,7 @@ markup language
 ### Animated tags: ![works](https://img.shields.io/badge/status-beta-yellow?style=flat-square)
 
 - wavy text can be made using `<wave a=amount>your text</wave>`
-- bouncy text can be made using `<bounce a-amount>your text</bounce>`
+- bouncy text can be made using `<bounce a=amount>your text</bounce>`
 
 # Made by:
 
