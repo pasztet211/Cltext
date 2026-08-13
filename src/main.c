@@ -80,7 +80,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    SDL_Surface *icon = SDL_LoadBMP("./icon.bmp");
+    SDL_Surface *icon = SDL_LoadBMP("C:/Cltext/icon.bmp");
 
     if (!icon) {
         printf("Icon failed to load: %s\n", SDL_GetError());
