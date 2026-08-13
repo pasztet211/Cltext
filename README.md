@@ -2,7 +2,7 @@
 ![SDL2](https://img.shields.io/badge/SDL2-required-green?style=flat-square)
 ![SDL2_ttf](https://img.shields.io/badge/SDL2__ttf-required-green?style=flat-square)
 
-![version](https://img.shields.io/badge/version-v0.0.7-orange?style=flat-square)
+![version](https://img.shields.io/badge/version-v0.1.0-orange?style=flat-square)
 
 # Cltext
 
@@ -56,7 +56,7 @@ cltext [-v | --version]
 - wavy text can be made using `<wave a=amount>your text</wave>`
 - bouncy text can be made using `<bounce a=amount>your text</bounce>`
 - text that shakes can be made using `<shake a=amount>your text</shake>`
-- to color text use `<color c="#ffffff>your text</color>`
+- to color text use `<color c="#ffffff">your text</color>`
 
 ### Document tags: ![works](https://img.shields.io/badge/status-stable-green?style=flat-square)
 
