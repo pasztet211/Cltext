@@ -21,6 +21,10 @@ markup language
 ```bash
 cltext filename.clt
 ```
+- or check info with
+```bash
+cltext [-v | --version]
+```
 
 ### Basic tags ![works](https://img.shields.io/badge/status-stable-green?style=flat-square)
 
