@@ -57,6 +57,10 @@ cltext [-v | --version]
 - bouncy text can be made using `<bounce a=amount>your text</bounce>`
 - text that shakes can be made using `<shake a=amount>your text</shake>`
 
+### Document tags: ![works](https://img.shields.io/badge/status-beta-yellow?style=flat-square)
+
+- changing the document bg color can be done using `<bgcolor c="#ff0000">`
+
 ### Comments: ![works](https://img.shields.io/badge/status-stable-green?style=flat-square)
 
 - to add a comment use `<?== comment ==?>`
