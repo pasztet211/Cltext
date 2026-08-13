@@ -10,10 +10,17 @@
 #define FONT_SIZE 14
 #define LINE_SPACING 6
 
+#define VERSION "v0.0.5" 
+
 int main(int argc, char *argv[]) {
     if (argc < 2) {
         printf("Usage: cltext <file.clt>\n");
         return 1;
+    }
+
+    if (argc == 2 && (strcmp(argv[1], "-v") == 0 || strcmp(argv[1], "--version") == 0)) {
+        printf("Cltext %s\n", VERSION);
+        return 0;
     }
 
     FILE *file = fopen(argv[1], "rb");
@@ -189,10 +196,7 @@ int main(int argc, char *argv[]) {
                     continue;
                 }
 
-                /*
-                * For now we handle one byte/character at a time.
-                * This is perfect for normal ASCII text.
-                */
+
                 char character[2];
 
                 character[0] = *text_start;
