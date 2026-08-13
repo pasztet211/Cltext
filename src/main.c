@@ -55,7 +55,9 @@ int main(int argc, char *argv[]) {
 
     TextSegment *segments;
     SDL_Color bgcolor = {20, 20, 20, 255};
-    int segment_count = parse_text(text, &segments, &bgcolor);
+    SDL_Color text_color = {255, 255, 255, 255};
+
+    int segment_count = parse_text(text, &segments, &bgcolor, &text_color);
 
     if (segment_count < 0) {
         printf("Parser error.\n");
@@ -159,8 +161,6 @@ int main(int argc, char *argv[]) {
 
         return 2;
     }
-
-    SDL_Color white = {255, 255, 255, 255};
 
     int running = 1;
     SDL_Event event;
@@ -270,7 +270,7 @@ int main(int argc, char *argv[]) {
                 }
 
                 SDL_Surface *surface =
-                    TTF_RenderUTF8_Blended(font, character, white);
+                    TTF_RenderUTF8_Blended(font, character,segments[i].color);
 
                 if (surface == NULL) {
                     printf(

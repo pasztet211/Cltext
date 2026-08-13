@@ -19,9 +19,11 @@ typedef struct {
     float wave_amount;
     float bounce_amount;
     float shake_amount;
+
+    SDL_Color color;
 } TextSegment;
 
-int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor);
+int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SDL_Color *text_color);
 
 void free_segments(TextSegment *segments, int count);
 

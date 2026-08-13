@@ -14,7 +14,8 @@ static void add_segment(
     TextStyle style,
     float wave_amount,
     float bounce_amount,
-    float shake_amount
+    float shake_amount,
+    SDL_Color *color
 ) {
     if (length == 0) {
         return;
@@ -46,11 +47,12 @@ static void add_segment(
     (*segments)[*count].wave_amount = wave_amount;
     (*segments)[*count].bounce_amount = bounce_amount;
     (*segments)[*count].shake_amount = shake_amount;
+    (*segments)[*count].color = *color;
 
     (*count)++;
 }
 
-int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor) {
+int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SDL_Color *text_color) {
     int capacity = 8;
     int count = 0;
 
@@ -103,7 +105,8 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor) {
             current_style,
             current_wave_amount,
             current_bounce_amount,
-            current_shake_amount
+            current_shake_amount,
+            text_color
         );
 
         size_t tag_length = tag_end - pos - 1;
@@ -180,6 +183,21 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor) {
                     *bgcolor = hex_to_sdl_color(bg_color);
                 }
             }
+            else if (strncmp(tag, "color", 5) == 0) {
+                char textcolor[8] = "";
+
+                char *c = strstr(tag, "c=\"");
+
+                if (c != NULL) {
+                    strncpy(textcolor, c + 3, 7);
+                    textcolor[7] = '\0';
+
+                    *text_color = hex_to_sdl_color(textcolor);
+                }
+            }
+            else if (strcmp(tag, "/color") == 0) {
+                *text_color = hex_to_sdl_color("#ffffff");
+            }
             else {
                 add_segment(
                     segments,
@@ -190,7 +208,8 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor) {
                     current_style,
                     current_wave_amount,
                     current_bounce_amount,
-                    current_shake_amount
+                    current_shake_amount,
+                    text_color
                 );
             }
         }
@@ -208,7 +227,8 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor) {
         current_style,
         current_wave_amount,
         current_bounce_amount,
-        current_shake_amount
+        current_shake_amount,
+        text_color
     );
 
     return count;
