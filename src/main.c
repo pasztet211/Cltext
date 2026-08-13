@@ -104,7 +104,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    if (icon) {
+    if (icon != NULL) {
         SDL_SetWindowIcon(window, icon);
         SDL_FreeSurface(icon);
     }
