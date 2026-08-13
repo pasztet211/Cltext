@@ -77,6 +77,12 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
+    SDL_Surface *icon = SDL_LoadBMP("./icon.bmp");
+
+    if (!icon) {
+        printf("Icon failed to load: %s\n", SDL_GetError());
+    }
+
     SDL_Window *window = SDL_CreateWindow(
         "Cltext",
         SDL_WINDOWPOS_CENTERED,
@@ -93,6 +99,11 @@ int main(int argc, char *argv[]) {
         free_segments(segments, segment_count);
         free(text);
         return 1;
+    }
+
+    if (icon) {
+        SDL_SetWindowIcon(window, icon);
+        SDL_FreeSurface(icon);
     }
 
     SDL_Renderer *renderer = SDL_CreateRenderer(
