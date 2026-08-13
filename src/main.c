@@ -201,14 +201,14 @@ int main(int argc, char *argv[]) {
                 float scale = 1.0f;
                 float height_b = 0.0f;
 
-                if (segments[i].style == STYLE_WAVE) {
+                if (segments[i].style == STYLE_BOUNCE) {
                     scale = wave_scale(
                         segments[i].amount,
                         time,
                         character_index
                     );
                 }
-                else if (segments[i].style == STYLE_BOUNCE) {
+                else if (segments[i].style == STYLE_WAVE) {
                     height_b = bounce_height(
                         segments[i].amount,
                         time,
