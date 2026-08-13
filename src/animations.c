@@ -20,3 +20,15 @@ float bounce_height(float amount, float time, int character_index)
 
     return amount * 3.0f * wave;
 }
+
+void shake_offset(
+    float amount,
+    float time,
+    int character_index,
+    float *offset_x,
+    float *offset_y
+)
+{
+    *offset_x = amount * sinf(time * 30.0f + character_index * 1.7f);
+    *offset_y = amount * cosf(time * 37.0f + character_index * 2.1f);
+}

@@ -12,7 +12,8 @@ static void add_segment(
     size_t length,
     TextStyle style,
     float wave_amount,
-    float bounce_amount
+    float bounce_amount,
+    float shake_amount
 ) {
     if (length == 0) {
         return;
@@ -43,6 +44,7 @@ static void add_segment(
     (*segments)[*count].style = style;
     (*segments)[*count].wave_amount = wave_amount;
     (*segments)[*count].bounce_amount = bounce_amount;
+    (*segments)[*count].shake_amount = shake_amount;
 
     (*count)++;
 }
@@ -61,6 +63,7 @@ int parse_text(const char *input, TextSegment **segments) {
 
     float current_wave_amount = 0.0f;
     float current_bounce_amount = 0.0f;
+    float current_shake_amount = 0.0f;
 
     const char *text_start = input;
     const char *pos = input;
@@ -98,7 +101,8 @@ int parse_text(const char *input, TextSegment **segments) {
             pos - text_start,
             current_style,
             current_wave_amount,
-            current_bounce_amount
+            current_bounce_amount,
+            current_shake_amount
         );
 
         size_t tag_length = tag_end - pos - 1;
@@ -149,6 +153,20 @@ int parse_text(const char *input, TextSegment **segments) {
                 current_style &= ~STYLE_BOUNCE;
                 current_bounce_amount = 0.0f;
             }
+            else if (strncmp(tag, "shake", 5) == 0) {
+                current_style |= STYLE_SHAKE;
+                current_shake_amount = 1.0f;
+
+                char *a = strstr(tag, "a=");
+
+                if (a != NULL) {
+                    current_shake_amount = strtof(a + 2, NULL);
+                }
+            }
+            else if (strcmp(tag, "/shake") == 0) {
+                current_style &= ~STYLE_SHAKE;
+                current_shake_amount = 0.0f;
+            }
             else {
                 add_segment(
                     segments,
@@ -158,7 +176,8 @@ int parse_text(const char *input, TextSegment **segments) {
                     tag_end - pos + 1,
                     current_style,
                     current_wave_amount,
-                    current_bounce_amount
+                    current_bounce_amount,
+                    current_shake_amount
                 );
             }
         }
@@ -175,7 +194,8 @@ int parse_text(const char *input, TextSegment **segments) {
         pos - text_start,
         current_style,
         current_wave_amount,
-        current_bounce_amount
+        current_bounce_amount,
+        current_shake_amount
     );
 
     return count;

@@ -1,5 +1,5 @@
 there is this <bold><wave a=1>thingy</wave></bold> called a <bold>particle</bold>
-it is very <tilt>small.</tilt>
+<shake a=1>it</shake> is very <tilt>small.</tilt>
 <?==
  comment 
 ==?>
