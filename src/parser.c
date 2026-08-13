@@ -11,7 +11,8 @@ static void add_segment(
     const char *text,
     size_t length,
     TextStyle style,
-    float amount
+    float wave_amount,
+    float bounce_amount
 ) {
     if (length == 0) {
         return;
@@ -38,8 +39,10 @@ static void add_segment(
 
     memcpy((*segments)[*count].text, text, length);
     (*segments)[*count].text[length] = '\0';
+
     (*segments)[*count].style = style;
-    (*segments)[*count].amount = amount;
+    (*segments)[*count].wave_amount = wave_amount;
+    (*segments)[*count].bounce_amount = bounce_amount;
 
     (*count)++;
 }
@@ -55,7 +58,9 @@ int parse_text(const char *input, TextSegment **segments) {
     }
 
     TextStyle current_style = STYLE_NORMAL;
-    float current_amount = 0.0f;
+
+    float current_wave_amount = 0.0f;
+    float current_bounce_amount = 0.0f;
 
     const char *text_start = input;
     const char *pos = input;
@@ -80,7 +85,8 @@ int parse_text(const char *input, TextSegment **segments) {
             text_start,
             pos - text_start,
             current_style,
-            current_amount
+            current_wave_amount,
+            current_bounce_amount
         );
 
         size_t tag_length = tag_end - pos - 1;
@@ -92,48 +98,44 @@ int parse_text(const char *input, TextSegment **segments) {
             tag[tag_length] = '\0';
 
             if (strcmp(tag, "bold") == 0) {
-                current_style = STYLE_BOLD;
-                current_amount = 0.0f;
+                current_style |= STYLE_BOLD;
             }
             else if (strcmp(tag, "/bold") == 0) {
-                current_style = STYLE_NORMAL;
-                current_amount = 0.0f;
+                current_style &= ~STYLE_BOLD;
             }
             else if (strcmp(tag, "tilt") == 0) {
-                current_style = STYLE_TILT;
-                current_amount = 0.0f;
+                current_style |= STYLE_TILT;
             }
             else if (strcmp(tag, "/tilt") == 0) {
-                current_style = STYLE_NORMAL;
-                current_amount = 0.0f;
+                current_style &= ~STYLE_TILT;
             }
             else if (strncmp(tag, "wave", 4) == 0) {
-                current_style = STYLE_WAVE;
-                current_amount = 1.0f;
+                current_style |= STYLE_WAVE;
+                current_wave_amount = 1.0f;
 
                 char *a = strstr(tag, "a=");
 
                 if (a != NULL) {
-                    current_amount = strtof(a + 2, NULL);
+                    current_wave_amount = strtof(a + 2, NULL);
                 }
             }
             else if (strcmp(tag, "/wave") == 0) {
-                current_style = STYLE_NORMAL;
-                current_amount = 0.0f;
+                current_style &= ~STYLE_WAVE;
+                current_wave_amount = 0.0f;
             }
             else if (strncmp(tag, "bounce", 6) == 0) {
-                current_style = STYLE_BOUNCE;
-                current_amount = 1.0f;
+                current_style |= STYLE_BOUNCE;
+                current_bounce_amount = 1.0f;
 
                 char *a = strstr(tag, "a=");
 
                 if (a != NULL) {
-                    current_amount = strtof(a + 2, NULL);
+                    current_bounce_amount = strtof(a + 2, NULL);
                 }
             }
             else if (strcmp(tag, "/bounce") == 0) {
-                current_style = STYLE_NORMAL;
-                current_amount = 0.0f;
+                current_style &= ~STYLE_BOUNCE;
+                current_bounce_amount = 0.0f;
             }
             else {
                 add_segment(
@@ -143,7 +145,8 @@ int parse_text(const char *input, TextSegment **segments) {
                     pos,
                     tag_end - pos + 1,
                     current_style,
-                    current_amount
+                    current_wave_amount,
+                    current_bounce_amount
                 );
             }
         }
@@ -159,7 +162,8 @@ int parse_text(const char *input, TextSegment **segments) {
         text_start,
         pos - text_start,
         current_style,
-        current_amount
+        current_wave_amount,
+        current_bounce_amount
     );
 
     return count;

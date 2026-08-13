@@ -10,7 +10,7 @@
 #define FONT_SIZE 14
 #define LINE_SPACING 6
 
-#define VERSION "v0.0.5" 
+#define VERSION "v0.0.5"
 
 int main(int argc, char *argv[]) {
     if (argc < 2) {
@@ -64,6 +64,7 @@ int main(int argc, char *argv[]) {
 
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         printf("SDL_Init error: %s\n", SDL_GetError());
+        free_segments(segments, segment_count);
         free(text);
         return 1;
     }
@@ -71,6 +72,7 @@ int main(int argc, char *argv[]) {
     if (TTF_Init() != 0) {
         printf("TTF_Init error: %s\n", TTF_GetError());
         SDL_Quit();
+        free_segments(segments, segment_count);
         free(text);
         return 1;
     }
@@ -88,6 +90,7 @@ int main(int argc, char *argv[]) {
         printf("Window error: %s\n", SDL_GetError());
         TTF_Quit();
         SDL_Quit();
+        free_segments(segments, segment_count);
         free(text);
         return 1;
     }
@@ -103,6 +106,7 @@ int main(int argc, char *argv[]) {
         SDL_DestroyWindow(window);
         TTF_Quit();
         SDL_Quit();
+        free_segments(segments, segment_count);
         free(text);
         return 1;
     }
@@ -138,6 +142,7 @@ int main(int argc, char *argv[]) {
         SDL_DestroyWindow(window);
         TTF_Quit();
         SDL_Quit();
+        free_segments(segments, segment_count);
         free(text);
 
         return 2;
@@ -165,17 +170,30 @@ int main(int argc, char *argv[]) {
 
         for (int i = 0; i < segment_count; i++) {
 
-            TTF_Font *font;
+            TTF_Font *font = normal_font;
 
-            if (segments[i].style == STYLE_BOLD) {
+            /*
+             * Pick the base font.
+             * Bold + tilt will be handled using SDL_ttf font styling.
+             */
+            if (segments[i].style & STYLE_BOLD) {
                 font = bold_font;
             }
-            else if (segments[i].style == STYLE_TILT) {
+            else if (segments[i].style & STYLE_TILT) {
                 font = italic_font;
             }
-            else {
-                font = normal_font;
+
+            int font_style = TTF_STYLE_NORMAL;
+
+            if (segments[i].style & STYLE_BOLD) {
+                font_style |= TTF_STYLE_BOLD;
             }
+
+            if (segments[i].style & STYLE_TILT) {
+                font_style |= TTF_STYLE_ITALIC;
+            }
+
+            TTF_SetFontStyle(font, font_style);
 
             char *text_start = segments[i].text;
             int character_index = 0;
@@ -196,7 +214,6 @@ int main(int argc, char *argv[]) {
                     continue;
                 }
 
-
                 char character[2];
 
                 character[0] = *text_start;
@@ -205,16 +222,17 @@ int main(int argc, char *argv[]) {
                 float scale = 1.0f;
                 float height_b = 0.0f;
 
-                if (segments[i].style == STYLE_BOUNCE) {
+                if (segments[i].style & STYLE_BOUNCE) {
                     scale = wave_scale(
-                        segments[i].amount,
+                        segments[i].bounce_amount,
                         time,
                         character_index
                     );
                 }
-                else if (segments[i].style == STYLE_WAVE) {
+
+                if (segments[i].style & STYLE_WAVE) {
                     height_b = bounce_height(
-                        segments[i].amount,
+                        segments[i].wave_amount,
                         time,
                         character_index
                     );
@@ -237,12 +255,22 @@ int main(int argc, char *argv[]) {
                         surface
                     );
 
+                if (texture == NULL) {
+                    printf(
+                        "Texture creation error: %s\n",
+                        SDL_GetError()
+                    );
+
+                    SDL_FreeSurface(surface);
+                    break;
+                }
+
                 int width = (int)(surface->w * scale);
-                float height = (int)(surface->h * scale);
+                int height = (int)(surface->h * scale);
 
                 SDL_Rect rect = {
                     x,
-                    y + (surface->h - height) / 2 - height_b,
+                    y + (surface->h - height) / 2 - (int)height_b,
                     width,
                     height
                 };
@@ -255,9 +283,9 @@ int main(int argc, char *argv[]) {
                 );
 
                 /*
-                * Advance by the ORIGINAL character width,
-                * not the scaled width.
-                */
+                 * Advance by the ORIGINAL character width,
+                 * not the scaled width.
+                 */
                 x += surface->w;
 
                 SDL_DestroyTexture(texture);
@@ -267,11 +295,14 @@ int main(int argc, char *argv[]) {
                 character_index++;
             }
         }
+
         SDL_RenderPresent(renderer);
     }
 
+    TTF_SetFontStyle(normal_font, TTF_STYLE_NORMAL);
     TTF_CloseFont(bold_font);
     TTF_CloseFont(normal_font);
+    TTF_CloseFont(italic_font);
 
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);

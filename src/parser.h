@@ -2,20 +2,23 @@
 #define PARSER_H
 
 typedef enum {
-    STYLE_NORMAL,
-    STYLE_BOLD,
-    STYLE_TILT,
-    STYLE_WAVE,
-    STYLE_BOUNCE
+    STYLE_NORMAL = 0,
+    STYLE_BOLD   = 1 << 0,
+    STYLE_TILT   = 1 << 1,
+    STYLE_WAVE   = 1 << 2,
+    STYLE_BOUNCE = 1 << 3
 } TextStyle;
 
 typedef struct {
     char *text;
     TextStyle style;
-    float amount;
+
+    float wave_amount;
+    float bounce_amount;
 } TextSegment;
 
 int parse_text(const char *input, TextSegment **segments);
+
 void free_segments(TextSegment *segments, int count);
 
 #endif
