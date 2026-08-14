@@ -25,7 +25,7 @@ typedef struct {
     SDL_Color color;
 } TextSegment;
 
-int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SDL_Color *text_color);
+int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SDL_Color *text_color, SDL_Color *base_text_color);
 
 void free_segments(TextSegment *segments, int count);
 

@@ -1,4 +1,4 @@
-there is this <bold><wave a=1>thingy</wave></bold> called a <bold>particle</bold>
+<txtcolor c="#000000">there is this <bold><wave a=1>thingy</wave></bold> called a <bold>particle</bold>
 <shake a=1>it</shake> is very <tilt><small>small.</small></tilt>
 <?==
  comment 

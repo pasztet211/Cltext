@@ -52,7 +52,7 @@ static void add_segment(
     (*count)++;
 }
 
-int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SDL_Color *text_color) {
+int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SDL_Color *text_color, SDL_Color *base_text_color) {
     int capacity = 8;
     int count = 0;
 
@@ -197,7 +197,7 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SD
                 }
             }
             else if (strcmp(tag, "/color") == 0) {
-                *text_color = hex_to_sdl_color("#ffffff");
+                *text_color = *base_text_color;
             }
             else if (strcmp(tag, "big") == 0) {
                 current_style |= STYLE_BIG;
@@ -210,6 +210,20 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SD
             }
             else if (strcmp(tag, "/small") == 0) {
                 current_style &= ~STYLE_SMALL;
+            }
+            else if (strncmp(tag, "txtcolor", 8) == 0) {
+                char textcolor[8] = "";
+
+                char *c = strstr(tag, "c=\"");
+
+                if (c != NULL) {
+                    strncpy(textcolor, c + 3, 7);
+                    textcolor[7] = '\0';
+                    
+                    *base_text_color = hex_to_sdl_color(textcolor);
+                    *text_color = hex_to_sdl_color(textcolor);
+                }
+                
             }
             else {
                 add_segment(

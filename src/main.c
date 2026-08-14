@@ -11,6 +11,7 @@
 #define LINE_SPACING 6
 
 #define VERSION "v0.1.1"
+SDL_Color base_text_color = {255,255,255,255};
 
 int main(int argc, char *argv[]) {
     if (argc < 2) {
@@ -57,7 +58,7 @@ int main(int argc, char *argv[]) {
     SDL_Color bgcolor = {20, 20, 20, 255};
     SDL_Color text_color = {255, 255, 255, 255};
 
-    int segment_count = parse_text(text, &segments, &bgcolor, &text_color);
+    int segment_count = parse_text(text, &segments, &bgcolor, &text_color, &base_text_color);
 
     if (segment_count < 0) {
         printf("Parser error.\n");
