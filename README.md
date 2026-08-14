@@ -50,6 +50,8 @@ cltext [-v | --version]
 
 - to make a text **BOLD** use `<bold>your text</bold>`
 - to make a text *italic* use `<tilt>your text</tilt>`
+- to make text small use `<small>your text</small>`
+- to make text big use `<big>your text</big>`
 
 ### Animated tags: ![works](https://img.shields.io/badge/status-stable-green?style=flat-square)
 
@@ -60,7 +62,7 @@ cltext [-v | --version]
 
 ### Document tags: ![works](https://img.shields.io/badge/status-stable-green?style=flat-square)
 
-- changing the document bg color can be done using `<bgcolor c="#ff0000">`
+- changing the document bg color can be done using `<bgcolor c="#ff0000">`[^first]
 
 ### Comments: ![works](https://img.shields.io/badge/status-stable-green?style=flat-square)
 
