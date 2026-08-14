@@ -10,7 +10,7 @@
 #define FONT_SIZE 14
 #define LINE_SPACING 6
 
-#define VERSION "v0.1.0"
+#define VERSION "v0.1.1"
 
 int main(int argc, char *argv[]) {
     if (argc < 2) {
