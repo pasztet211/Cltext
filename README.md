@@ -63,6 +63,7 @@ cltext [-v | --version]
 ### Document tags: ![works](https://img.shields.io/badge/status-stable-green?style=flat-square)
 
 - changing the document bg color can be done using `<bgcolor c="#ff0000">`[^first]
+- to change the document default text color use `<txtcolor c="#000000">`
 
 ### Comments: ![works](https://img.shields.io/badge/status-stable-green?style=flat-square)
 
