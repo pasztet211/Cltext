@@ -140,7 +140,40 @@ int main(int argc, char *argv[]) {
         FONT_SIZE
     );
 
-    if (normal_font == NULL || bold_font == NULL || italic_font == NULL) {
+    TTF_Font *big_normal_font = TTF_OpenFont(
+        "C:\\Windows\\Fonts\\arial.ttf",
+        FONT_SIZE + 4
+    );
+
+    TTF_Font *big_bold_font = TTF_OpenFont(
+        "C:\\Windows\\Fonts\\arialbd.ttf",
+        FONT_SIZE + 4
+    );
+
+    TTF_Font *big_italic_font = TTF_OpenFont(
+        "C:\\Windows\\Fonts\\ariali.ttf",
+        FONT_SIZE + 4
+    );
+
+    TTF_Font *small_normal_font = TTF_OpenFont(
+        "C:\\Windows\\Fonts\\arial.ttf",
+        FONT_SIZE - 2
+    );
+
+    TTF_Font *small_bold_font = TTF_OpenFont(
+        "C:\\Windows\\Fonts\\arialbd.ttf",
+        FONT_SIZE - 2
+    );
+
+    TTF_Font *small_italic_font = TTF_OpenFont(
+        "C:\\Windows\\Fonts\\ariali.ttf",
+        FONT_SIZE - 2
+    );
+    
+
+    if (normal_font == NULL || bold_font == NULL || italic_font == NULL
+       || big_normal_font == NULL || big_bold_font == NULL || big_italic_font == NULL
+       || small_normal_font == NULL || small_bold_font == NULL || small_italic_font == NULL) {
         printf("Font error: %s\n", TTF_GetError());
 
         if (normal_font != NULL)
@@ -151,6 +184,24 @@ int main(int argc, char *argv[]) {
 
         if (italic_font != NULL)
             TTF_CloseFont(italic_font);
+
+        if (big_normal_font != NULL)
+            TTF_CloseFont(big_normal_font);
+
+        if (big_bold_font != NULL)
+            TTF_CloseFont(big_bold_font);
+
+        if (big_italic_font != NULL)
+            TTF_CloseFont(big_italic_font);
+
+        if (small_normal_font != NULL)
+            TTF_CloseFont(small_normal_font);
+
+        if (small_bold_font != NULL)
+            TTF_CloseFont(small_bold_font);
+
+        if (small_italic_font != NULL)
+            TTF_CloseFont(small_italic_font);
 
         SDL_DestroyRenderer(renderer);
         SDL_DestroyWindow(window);
@@ -190,16 +241,36 @@ int main(int argc, char *argv[]) {
         for (int i = 0; i < segment_count; i++) {
 
             TTF_Font *font = normal_font;
-
             /*
              * Pick the base font.
              * Bold + tilt will be handled using SDL_ttf font styling.
              */
-            if (segments[i].style & STYLE_BOLD) {
-                font = bold_font;
+            if (segments[i].style & STYLE_BIG) {
+                font = big_normal_font;
+                if (segments[i].style & STYLE_BOLD) {
+                    font = big_bold_font;
+                }
+                else if (segments[i].style & STYLE_TILT) {
+                    font = big_italic_font;
+                }
             }
-            else if (segments[i].style & STYLE_TILT) {
-                font = italic_font;
+            else if (segments[i].style & STYLE_SMALL) {
+                font = small_normal_font;
+                if (segments[i].style & STYLE_BOLD) {
+                    font = small_bold_font;
+                }
+                else if (segments[i].style & STYLE_TILT) {
+                    font = small_italic_font;
+                }
+            }
+            else {
+                font = normal_font;
+                if (segments[i].style & STYLE_BOLD) {
+                    font = bold_font;
+                }
+                else if (segments[i].style & STYLE_TILT) {
+                    font = italic_font;
+                }
             }
 
             int font_style = TTF_STYLE_NORMAL;

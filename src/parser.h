@@ -9,7 +9,9 @@ typedef enum {
     STYLE_TILT   = 1 << 1,
     STYLE_WAVE   = 1 << 2,
     STYLE_BOUNCE = 1 << 3,
-    STYLE_SHAKE  = 1 << 4
+    STYLE_SHAKE  = 1 << 4,
+    STYLE_BIG    = 1 << 5,
+    STYLE_SMALL  = 1 << 6
 } TextStyle;
 
 typedef struct {

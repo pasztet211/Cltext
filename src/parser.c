@@ -67,6 +67,7 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SD
     float current_wave_amount = 0.0f;
     float current_bounce_amount = 0.0f;
     float current_shake_amount = 0.0f;
+    int current_size = 0;
 
     const char *text_start = input;
     const char *pos = input;
@@ -197,6 +198,18 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SD
             }
             else if (strcmp(tag, "/color") == 0) {
                 *text_color = hex_to_sdl_color("#ffffff");
+            }
+            else if (strcmp(tag, "big") == 0) {
+                current_style |= STYLE_BIG;
+            }
+            else if (strcmp(tag, "/big") == 0) {
+                current_style &= ~STYLE_BIG;
+            }
+            else if (strcmp(tag, "small") == 0) {
+                current_style |= STYLE_SMALL;
+            }
+            else if (strcmp(tag, "/small") == 0) {
+                current_style &= ~STYLE_SMALL;
             }
             else {
                 add_segment(
