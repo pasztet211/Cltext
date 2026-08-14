@@ -10,7 +10,7 @@
 #define FONT_SIZE 14
 #define LINE_SPACING 6
 
-#define VERSION "v0.1.1"
+#define VERSION "v0.1.3"
 SDL_Color base_text_color = {255,255,255,255};
 
 int main(int argc, char *argv[]) {
