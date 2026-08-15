@@ -4,6 +4,7 @@
 #include <SDL2/SDL.h>
 
 #include "parser.h"
+#include "check_valid_tag.h"
 
 static void add_segment(
     TextSegment **segments,
@@ -73,6 +74,8 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SD
     const char *pos = input;
 
     while (*pos != '\0') {
+        int line_start = (pos == input || *(pos - 1) == '\n');
+
         if (*pos != '<') {
             pos++;
             continue;
@@ -88,6 +91,11 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SD
             }
 
             break;
+        }
+
+        if (!is_valid_tag(pos)) {
+            pos++;
+            continue;
         }
 
         const char *tag_end = strchr(pos, '>');
@@ -238,6 +246,26 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SD
                     current_shake_amount,
                     text_color
                 );
+            }
+
+            if (
+                line_start &&
+                (strncmp(tag, "txtcolor", 8) == 0 ||
+                strncmp(tag, "bgcolor", 7) == 0)
+            ) {
+                const char *line_end = tag_end + 1;
+
+                while (*line_end != '\0' && *line_end != '\n' && *line_end != '\r') {
+                    line_end++;
+                }
+
+                pos = line_end;
+
+                if (*pos == '\r') pos++;
+                if (*pos == '\n') pos++;
+
+                text_start = pos;
+                continue;
             }
         }
 
