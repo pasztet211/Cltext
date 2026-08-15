@@ -62,8 +62,8 @@ cltext [-v | --version]
 
 ### Document tags: ![works](https://img.shields.io/badge/status-stable-green?style=flat-square)
 
-- changing the document bg color can be done using `<bgcolor c="#ff0000">`[^first]
-- to change the document default text color use `<txtcolor c="#000000">`
+- changing the document bg color can be done using `<bgcolor c="#ff0000">`
+- to change the document default text color from that point onward use `<txtcolor c="#000000">`
 
 ### Comments: ![works](https://img.shields.io/badge/status-stable-green?style=flat-square)
 
@@ -72,5 +72,3 @@ cltext [-v | --version]
 # Made by:
 
 - [pasztet211](https://github.com/pasztet211) ![pasztet](https://img.shields.io/badge/creator-orange?style=flat-square)
-
-[^first]: i recomend putting these on the ***end*** of files
