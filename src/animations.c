@@ -14,9 +14,9 @@ float wave_scale(float amount, float time, int character_index)
 float bounce_height(float amount, float time, int character_index)
 {
     float shift_time = time + 0.4f;
-    float wave = (sinf(shift_time * 5.0f - character_index * 0.4f) + 1.0f) / 2.0f;
+    float wave = sinf(shift_time * 5.0f - character_index * 0.4f);
 
-    wave = wave * wave;
+    //wave = wave * wave;
 
     return amount * 3.0f * wave;
 }
