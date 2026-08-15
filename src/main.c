@@ -15,7 +15,7 @@ SDL_Color base_text_color = {255,255,255,255};
 
 int main(int argc, char *argv[]) {
     if (argc < 2) {
-        printf("Usage: cltext <file.clt>\n");
+        printf("Usage: cltext <file.clt> or cltext [-v | --version]\n");
         return 1;
     }
 
