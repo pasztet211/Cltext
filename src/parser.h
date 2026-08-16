@@ -11,7 +11,8 @@ typedef enum {
     STYLE_BOUNCE = 1 << 3,
     STYLE_SHAKE  = 1 << 4,
     STYLE_BIG    = 1 << 5,
-    STYLE_SMALL  = 1 << 6
+    STYLE_SMALL  = 1 << 6,
+    STYLE_GLITCH = 1 << 7
 } TextStyle;
 
 typedef struct {
@@ -21,6 +22,7 @@ typedef struct {
     float wave_amount;
     float bounce_amount;
     float shake_amount;
+    float glitch_amount;
 
     SDL_Color color;
 } TextSegment;
