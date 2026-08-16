@@ -12,7 +12,7 @@ markup language
 
 1. clone the repo to `C:\Cltext`
 2. add `C:\Cltext` to **PATH**
-    - if the SDL2 DLLs [egg. SDL2_ttf.dll] from `/libs` are not in **PATH**, move the contents of `/libs` to the main folder
+    - if the SDL2 DLLs [egg. `SDL2_ttf.dll`] from [`/libs`](./libs) are not in **PATH**, move the contents of `/libs` to the main folder
 3. the file extension for ***Cltext*** is `.clt`
 4. **(Optional)** install the Cltext VS Code extension
     - use `code --install-extension C:\Cltext\optionals\cltext-support-0.0.1.vsix` to install
