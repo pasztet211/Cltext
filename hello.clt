@@ -5,5 +5,5 @@ there is this <bold><wave a=2>thingy</wave></bold> called a <bold>particle</bold
 <?==
  comment 
 ==?>
-<bold>it is <wave a=0.5>part <big>of</big> an <bounce a=0.5><color c="#0000ff">atom</color></bounce></wave>.</bold>
+<bold><glitch>it</glitch> is <wave a=0.5>part <big>of</big> an <bounce a=0.5><color c="#0000ff">atom</color></bounce></wave>.</bold>
 <?== other comment ==?>

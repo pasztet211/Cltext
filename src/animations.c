@@ -1,4 +1,5 @@
 #include <math.h>
+#include <stdlib.h>
 
 #include "animations.h"
 
@@ -31,4 +32,12 @@ void shake_offset(
 {
     *offset_x = amount * sinf(time * 30.0f + character_index * 1.7f);
     *offset_y = amount * cosf(time * 37.0f + character_index * 2.1f);
+}
+
+float glitch_offset(float amount) {
+    if (rand() % 100 < 12) {
+        return (((float)rand()) - 3);
+    }
+
+    return 0.0f;
 }

@@ -312,8 +312,10 @@ int main(int argc, char *argv[]) {
 
                 float scale = 1.0f;
                 float height_b = 0.0f;
-                float offset_x = 0.0f;
-                float offset_y = 0.0f;
+                float shake_offset_x = 0.0f;
+                float shake_offset_y = 0.0f;
+                float glitch_offset_x = 0.0f;
+                float glitch_offset_y = 0.0f;
 
                 if (segments[i].style & STYLE_BOUNCE) {
                     scale = wave_scale(
@@ -336,9 +338,14 @@ int main(int argc, char *argv[]) {
                         segments[i].shake_amount,
                         time,
                         character_index,
-                        &offset_x,
-                        &offset_y
+                        &shake_offset_x,
+                        &shake_offset_y
                     );
+                }
+
+                if (segments[i].style & STYLE_GLITCH) {
+                    glitch_offset_x = glitch_offset(segments[i].glitch_amount);
+                    glitch_offset_y = glitch_offset(segments[i].glitch_amount);
                 }
 
                 SDL_Surface *surface =
@@ -372,8 +379,8 @@ int main(int argc, char *argv[]) {
                 int height = (int)(surface->h * scale);
 
                 SDL_Rect rect = {
-                    x + offset_x,
-                    y + (surface->h - height) / 2 - (int)height_b + offset_y,
+                    x + shake_offset_x + glitch_offset_x,
+                    y + (surface->h - height) / 2 - (int)height_b + shake_offset_y + glitch_offset_y,
                     width,
                     height
                 };

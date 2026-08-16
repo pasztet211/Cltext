@@ -68,6 +68,7 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SD
     float current_wave_amount = 0.0f;
     float current_bounce_amount = 0.0f;
     float current_shake_amount = 0.0f;
+    float current_glitch_amount = 0.0f;
     int current_size = 0;
 
     const char *text_start = input;
@@ -232,6 +233,14 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SD
                     *text_color = hex_to_sdl_color(textcolor);
                 }
                 
+            }
+            else if (strcmp(tag, "glitch") == 0) {
+                current_style |= STYLE_GLITCH;
+                current_glitch_amount = 10.0f;
+            }
+            else if (strcmp(tag, "/glitch") == 0) {
+                current_style &= ~STYLE_GLITCH;
+                current_glitch_amount = 0.0f;
             }
             else {
                 add_segment(
