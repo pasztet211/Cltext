@@ -15,12 +15,8 @@ int is_valid_tag(const char *pos) {
         p++;
     }
 
-    if (*p == '?') {
-        p++;
-    }
-
-    if (*p == '=') {
-        p++;
+    if (p[0] == '?' && p[1] == '=' && p[2] == '=') {
+        p += 3;
     }
 
     if (!isalpha((unsigned char)*p)) {
