@@ -46,7 +46,7 @@ cltext filename.clt
 ```
 - or check info with
 ```bash
-cltext [-v | --version]
+cltext [-v | --version] [extension | cltext]
 cltext [-h | --help]
 ```
 
