@@ -1,8 +1,6 @@
 #include "info.h"
 
 const char info[] =
-    "Cltext v0.1.7\n"
-    "\n"
     "Usage:\n"
     "  cltext <file.clt>\n"
     "  cltext [options]\n"
@@ -25,7 +23,7 @@ const char info[] =
     "    txtcolor         changes text color:  <txtcolor c=\"#000000\">\n"
     "    title            changes window title:<title name=\"title\">\n\n"
     "Comments:\n"
-    "  <?== comment ==?>\n"
+    "  <?== comment ==?>\n\n"
     "Options:\n"
     "  -h, --help       Show this help message\n"
     "  -v, --version    Show the Cltext version\n";

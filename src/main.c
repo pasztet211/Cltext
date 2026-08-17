@@ -25,10 +25,11 @@ int main(int argc, char *argv[]) {
         return 0;
     }
     else if (argc == 2 && (strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0)) {
+        printf("Cltext %s\n\n", VERSION);
         printf("%s", info);
         return 0;
     }
-    
+
     FILE *file = fopen(argv[1], "rb");
 
     if (file == NULL) {
