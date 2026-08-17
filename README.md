@@ -12,10 +12,10 @@ markup language
 
 1. clone the repo to `C:\Cltext`
 2. add `C:\Cltext` to **PATH**
-    - if the SDL2 DLLs [egg. `SDL2_ttf.dll`] from [`/libs`](./libs) are not in **your system PATH**, move the contents of `/libs` to the main folder
+    * if the SDL2 DLLs [egg. `SDL2_ttf.dll`] from [`/libs`](./libs) are not in **your system PATH**, move the contents of `/libs` to the main folder
 3. the file extension for ***Cltext*** is `.clt`
 4. **(Optional)** install the Cltext VS Code extension
-    - use `code --install-extension C:\Cltext\optionals\cltext-support-0.0.1.vsix` to install
+    * use `code --install-extension C:\Cltext\optionals\cltext-support-*.vsix` to install
 
 ## Quick Start:
 
@@ -55,18 +55,20 @@ cltext [-v | --version]
 - to make a text *italic* use `<tilt>your text</tilt>`
 - to make text small use `<small>your text</small>`
 - to make text big use `<big>your text</big>`
+- to make text render in reverse use `<reverse>your text</reverse>`
+    * example of reverse text: `!dlrow ,olleH`
+- to color text use `<color c="#ffffff">your text</color>`
 
 ### Animated tags: ![works](https://img.shields.io/badge/status-stable-green?style=flat-square)
 
 - wavy text can be made using `<wave a=amount>your text</wave>`
 - bouncy text can be made using `<bounce a=amount>your text</bounce>`
 - text that shakes can be made using `<shake a=amount>your text</shake>`
-- to color text use `<color c="#ffffff">your text</color>`
 - to make text glitchy use `<glitch>your text</glitch>`
 
 ### Document tags: ![works](https://img.shields.io/badge/status-stable-green?style=flat-square)
 
-- changing the document bg color can be done using `<bgcolor c="#ff0000">`
+- to change the document background color use `<bgcolor c="#ff0000">`
 - to change the document default text color from that point onward use `<txtcolor c="#000000">`
 - to change window title use `<title name="your title">`
 
