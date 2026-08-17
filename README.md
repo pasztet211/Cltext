@@ -68,6 +68,7 @@ cltext [-v | --version]
 
 - changing the document bg color can be done using `<bgcolor c="#ff0000">`
 - to change the document default text color from that point onward use `<txtcolor c="#000000">`
+- to change window title use `<title name="your title">`
 
 ### Comments: ![works](https://img.shields.io/badge/status-stable-green?style=flat-square)
 
