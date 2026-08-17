@@ -25,5 +25,6 @@ const char info[] =
     "Comments:\n"
     "  <?== comment ==?>\n\n"
     "Options:\n"
-    "  -h, --help       Show this help message\n"
-    "  -v, --version    Show the Cltext version\n";
+    "  -h, --help                  Show this help message\n"
+    "  -v, --version               Show the Cltext version\n"
+    "    -v extension, -v cltext   Show specified version\n";

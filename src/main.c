@@ -17,13 +17,22 @@ SDL_Color base_text_color = {255,255,255,255};
 
 int main(int argc, char *argv[]) {
     if (argc < 2) {
-        printf("Usage: cltext <file.clt> or cltext [-v | --version] [-h |--help]\n");
+        printf("Usage: cltext <file.clt> or cltext [-v [extension | cltext]| --version [extension | cltext]] [-h |--help]\n");
         return 1;
     }
 
     if (argc == 2 && (strcmp(argv[1], "-v") == 0 || strcmp(argv[1], "--version") == 0)) {
         printf("Cltext %s\n", VERSION);
         printf("Cltext VS Code extension %s\n", EXTENSION_VER);
+        return 0;
+    }
+    else if (argc == 3 && (strcmp(argv[1], "-v") == 0 || strcmp(argv[1], "--version") == 0) && (strcmp(argv[2], "cltext") == 0 || strcmp(argv[2], "extension") == 0)) {
+        if (strcmp(argv[2], "cltext") == 0) {
+            printf("Cltext %s\n", VERSION);
+        }
+        else if (strcmp(argv[2], "extension") == 0) {
+            printf("Cltext VS Code extension %s\n", EXTENSION_VER);
+        }
         return 0;
     }
     else if (argc == 2 && (strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0)) {
