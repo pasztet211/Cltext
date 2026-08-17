@@ -262,6 +262,12 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SD
                     }
                 }
             }
+            else if (strcmp(tag, "reverse") == 0) {
+                current_style |= STYLE_REVERSE;
+            }
+            else if (strcmp(tag, "/reverse") == 0) {
+                current_style &= ~STYLE_REVERSE;
+            }
             else {
                 add_segment(
                     segments,

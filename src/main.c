@@ -10,7 +10,7 @@
 #define FONT_SIZE 14
 #define LINE_SPACING 6
 
-#define VERSION "v0.1.5"
+#define VERSION "v0.1.7"
 SDL_Color base_text_color = {255,255,255,255};
 
 int main(int argc, char *argv[]) {
@@ -287,7 +287,23 @@ int main(int argc, char *argv[]) {
 
             TTF_SetFontStyle(font, font_style);
 
-            char *text_start = segments[i].text;
+            char reversed_text[8192];
+            char *text_start;
+
+            if (segments[i].style & STYLE_REVERSE) {
+                int len = strlen(segments[i].text);
+
+                for (int j = 0; j < len; j++) {
+                    reversed_text[j] = segments[i].text[len - 1 - j];
+                }
+
+                reversed_text[len] = '\0';
+                text_start = reversed_text;
+            }
+            else {
+                text_start = segments[i].text;
+            }
+
             int character_index = 0;
 
             while (*text_start != '\0') {
