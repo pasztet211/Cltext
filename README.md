@@ -66,6 +66,7 @@ cltext [-h | --help]
 - bouncy text can be made using `<bounce a=amount>your text</bounce>`
 - text that shakes can be made using `<shake a=amount>your text</shake>`
 - to make text glitchy use `<glitch>your text</glitch>`
+- to make text spin use `<spin a=1>your text</spin>`
 
 ### Document tags: ![works](https://img.shields.io/badge/status-stable-green?style=flat-square)
 
