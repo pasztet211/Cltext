@@ -6,6 +6,7 @@
 
 #include "parser.h"
 #include "animations.h"
+#include "info.h"
 
 #define FONT_SIZE 14
 #define LINE_SPACING 6
@@ -15,7 +16,7 @@ SDL_Color base_text_color = {255,255,255,255};
 
 int main(int argc, char *argv[]) {
     if (argc < 2) {
-        printf("Usage: cltext <file.clt> or cltext [-v | --version]\n");
+        printf("Usage: cltext <file.clt> or cltext [-v | --version] [-h |--help]\n");
         return 1;
     }
 
@@ -23,7 +24,11 @@ int main(int argc, char *argv[]) {
         printf("Cltext %s\n", VERSION);
         return 0;
     }
-
+    else if (argc == 2 && (strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0)) {
+        printf("%s", info);
+        return 0;
+    }
+    
     FILE *file = fopen(argv[1], "rb");
 
     if (file == NULL) {
