@@ -39,3 +39,7 @@ float glitch_offset(float *offset_x, float *offset_y, float *scale) {
     *offset_y = (float)rand() / 10000;
     *scale    = (float)rand() / 28125;
 }
+
+float spin_angle(float amount, float time) {
+    return amount * time * 360.0f;
+}

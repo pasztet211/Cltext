@@ -350,6 +350,7 @@ int main(int argc, char *argv[]) {
                 float shake_offset_y = 0.0f;
                 float glitch_offset_x = 0.0f;
                 float glitch_offset_y = 0.0f;
+                float angle = 0.0f;
 
                 if (segments[i].style & STYLE_BOUNCE) {
                     scale = wave_scale(
@@ -374,6 +375,13 @@ int main(int argc, char *argv[]) {
                         character_index,
                         &shake_offset_x,
                         &shake_offset_y
+                    );
+                }
+
+                if (segments[i].style & STYLE_SPIN) {
+                    angle = spin_angle(
+                        segments[i].spin_ammount,
+                        time
                     );
                 }
 
@@ -418,13 +426,15 @@ int main(int argc, char *argv[]) {
                     height
                 };
 
-                SDL_RenderCopy(
+                SDL_RenderCopyEx(
                     renderer,
                     texture,
                     NULL,
-                    &rect
+                    &rect,
+                    angle,
+                    NULL,
+                    SDL_FLIP_NONE
                 );
-
                 /*
                  * Advance by the ORIGINAL character width,
                  * not the scaled width.

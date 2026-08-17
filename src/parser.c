@@ -16,7 +16,8 @@ static void add_segment(
     float wave_amount,
     float bounce_amount,
     float shake_amount,
-    SDL_Color *color
+    SDL_Color *color,
+    float spin_amount
 ) {
     if (length == 0) {
         return;
@@ -49,6 +50,7 @@ static void add_segment(
     (*segments)[*count].bounce_amount = bounce_amount;
     (*segments)[*count].shake_amount = shake_amount;
     (*segments)[*count].color = *color;
+    (*segments)[*count].spin_ammount = spin_amount;
 
     (*count)++;
 }
@@ -69,6 +71,7 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SD
     float current_bounce_amount = 0.0f;
     float current_shake_amount = 0.0f;
     float current_glitch_amount = 0.0f;
+    float current_spin_amount = 0.0f;
     int current_size = 0;
 
     const char *text_start = input;
@@ -116,7 +119,8 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SD
             current_wave_amount,
             current_bounce_amount,
             current_shake_amount,
-            text_color
+            text_color,
+            current_spin_amount
         );
 
         size_t tag_length = tag_end - pos - 1;
@@ -268,6 +272,20 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SD
             else if (strcmp(tag, "/reverse") == 0) {
                 current_style &= ~STYLE_REVERSE;
             }
+            else if (strncmp(tag, "spin", 4) == 0) {
+                current_style |= STYLE_SPIN;
+                current_spin_amount = 1.0f;
+
+                char *a = strstr(tag, "a=");
+
+                if (a != NULL) {
+                    current_spin_amount = strtof(a + 2, NULL);
+                }
+            }
+            else if (strcmp(tag, "/spin") == 0) {
+                current_style &= ~STYLE_SPIN;
+                current_spin_amount = 0.0f;
+            }
             else {
                 add_segment(
                     segments,
@@ -279,7 +297,8 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SD
                     current_wave_amount,
                     current_bounce_amount,
                     current_shake_amount,
-                    text_color
+                    text_color,
+                    current_spin_amount
                 );
             }
 
@@ -319,7 +338,8 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SD
         current_wave_amount,
         current_bounce_amount,
         current_shake_amount,
-        text_color
+        text_color,
+        current_spin_amount
     );
 
     return count;
