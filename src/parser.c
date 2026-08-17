@@ -53,7 +53,7 @@ static void add_segment(
     (*count)++;
 }
 
-int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SDL_Color *text_color, SDL_Color *base_text_color) {
+int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SDL_Color *text_color, SDL_Color *base_text_color, char (*title)[256]) {
     int capacity = 8;
     int count = 0;
 
@@ -242,6 +242,26 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SD
                 current_style &= ~STYLE_GLITCH;
                 current_glitch_amount = 0.0f;
             }
+            else if (strncmp(tag, "title", 5) == 0) {
+                char *name = strstr(tag, "name=\"");
+
+                if (name != NULL) {
+                    name += 6;
+
+                    char *end = strchr(name, '"');
+
+                    if (end != NULL) {
+                        size_t length = end - name;
+
+                        if (length > 255) {
+                            length = 255;
+                        }
+
+                        strncpy((*title), name, length);
+                        (*title)[length] = '\0';
+                    }
+                }
+            }
             else {
                 add_segment(
                     segments,
@@ -260,7 +280,8 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SD
             if (
                 line_start &&
                 (strncmp(tag, "txtcolor", 8) == 0 ||
-                strncmp(tag, "bgcolor", 7) == 0)
+                strncmp(tag, "bgcolor", 7) == 0 ||
+                strncmp(tag, "title", 5) == 0)
             ) {
                 const char *line_end = tag_end + 1;
 

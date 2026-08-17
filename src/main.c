@@ -57,8 +57,9 @@ int main(int argc, char *argv[]) {
     TextSegment *segments;
     SDL_Color bgcolor = {20, 20, 20, 255};
     SDL_Color text_color = {255, 255, 255, 255};
+    char title[256] = "Cltext";
 
-    int segment_count = parse_text(text, &segments, &bgcolor, &text_color, &base_text_color);
+    int segment_count = parse_text(text, &segments, &bgcolor, &text_color, &base_text_color, &title);
 
     if (segment_count < 0) {
         printf("Parser error.\n");
@@ -88,7 +89,7 @@ int main(int argc, char *argv[]) {
     }
 
     SDL_Window *window = SDL_CreateWindow(
-        "Cltext",
+        title,
         SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED,
         800,
