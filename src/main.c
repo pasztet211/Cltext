@@ -344,8 +344,7 @@ int main(int argc, char *argv[]) {
                 }
 
                 if (segments[i].style & STYLE_GLITCH) {
-                    glitch_offset_x = glitch_offset(segments[i].glitch_amount);
-                    glitch_offset_y = glitch_offset(segments[i].glitch_amount);
+                    glitch_offset(&glitch_offset_x, &glitch_offset_y, &scale);
                 }
 
                 SDL_Surface *surface =

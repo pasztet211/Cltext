@@ -34,10 +34,8 @@ void shake_offset(
     *offset_y = amount * cosf(time * 37.0f + character_index * 2.1f);
 }
 
-float glitch_offset(float amount) {
-    if (rand() % 100 < 12) {
-        return (((float)rand()) - 3);
-    }
-
-    return 0.0f;
+float glitch_offset(float *offset_x, float *offset_y, float *scale) {
+    *offset_x = (float)rand() / 10000;
+    *offset_y = (float)rand() / 10000;
+    *scale    = (float)rand() / 28125;
 }
