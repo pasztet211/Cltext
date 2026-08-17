@@ -12,6 +12,7 @@
 #define LINE_SPACING 6
 
 #define VERSION "v0.1.7"
+#define EXTENSION_VER "v0.2.0"
 SDL_Color base_text_color = {255,255,255,255};
 
 int main(int argc, char *argv[]) {
@@ -22,6 +23,7 @@ int main(int argc, char *argv[]) {
 
     if (argc == 2 && (strcmp(argv[1], "-v") == 0 || strcmp(argv[1], "--version") == 0)) {
         printf("Cltext %s\n", VERSION);
+        printf("Cltext VS Code extension %s\n", EXTENSION_VER);
         return 0;
     }
     else if (argc == 2 && (strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0)) {
