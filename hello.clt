@@ -2,7 +2,7 @@
 <bgcolor c="#ff0000">
 <title name="example">
 <reverse>there is this</reverse> <bold><wave a=2>thingy</wave></bold> called a <bold>particle</bold>
-<shake a=1>it</shake> is very <tilt><small>small.</small></tilt>
+<shake a=1>it</shake> is <spin a=1>very</spin> <tilt><small>small.</small></tilt>
 <?==
  comment 
 ==?>

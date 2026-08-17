@@ -11,7 +11,7 @@
 #define FONT_SIZE 14
 #define LINE_SPACING 6
 
-#define VERSION "v0.1.7"
+#define VERSION "v0.1.8"
 #define EXTENSION_VER "v0.2.0"
 SDL_Color base_text_color = {255,255,255,255};
 
