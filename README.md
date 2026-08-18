@@ -8,6 +8,10 @@
 
 markup language
 
+## demo:
+
+https://github.com/user-attachments/assets/34cc6d67-3ca6-4160-9af5-2f3584ac2ee2
+
 ## Installation and file extension:
 
 1. clone the repo to `C:\Cltext`
