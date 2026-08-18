@@ -1,4 +1,5 @@
 .vscode/
+.assets/
 
 save.sh
 push.sh
