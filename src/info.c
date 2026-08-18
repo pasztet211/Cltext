@@ -25,7 +25,7 @@ const char info[] =
     "    title            changes window title:<title name=\"title\">\n"
     "  Miscellaneous:\n"
     "    line             adds a line:         <line c=\"#ffffff\" l=1>\n"
-    "    outline          adds a text outline: <outline  c=\"#ffffff\" t=1>text>/outline>\n\n" 
+    "    outline          adds a text outline: <outline  c=\"#ffffff\" t=1>text</outline>\n\n" 
     "Comments:\n"
     "  <?== comment ==?>\n\n"
     "Options:\n"
