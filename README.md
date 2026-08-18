@@ -18,12 +18,14 @@ code:
 <txtcolor c="#000000">
 <bgcolor c="#ff0000">
 <title name="example">
+<bold><line l=3 c="#ffffff"></bold>
 <reverse>there is this</reverse> <bold><wave a=2>thingy</wave></bold> called a <bold>particle</bold>
 <shake a=1>it</shake> is <spin a=1>very</spin> <tilt><small>small.</small></tilt>
 <?==
  comment 
 ==?>
-<bold><glitch>it</glitch> is <wave a=0.5>part <big>of</big> an <bounce a=0.5><color c="#0000ff">atom</color></bounce></wave>.</bold>
+<bold><glitch>it</glitch> is <wave a=0.5>part <big>of</big> an <bounce a=0.5><color c="#0000ff"><outline t=2 c="#ffffff">atom</outline></color></bounce></wave>.</bold>
+<bold><line c="#ffffff" l=3></bold>
 <?== other comment ==?>
 ```
 
