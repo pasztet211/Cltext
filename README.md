@@ -2,8 +2,8 @@
 ![SDL2](https://img.shields.io/badge/SDL2-required-green?style=flat-square)
 ![SDL2_ttf](https://img.shields.io/badge/SDL2__ttf-required-green?style=flat-square)
 
-![version](https://img.shields.io/badge/version-v0.1.9-orange?style=flat-square)
-![extension](https://img.shields.io/badge/extension-v0.2.2-orange?style=flat-square)
+![version](https://img.shields.io/badge/version-v0.2.0-orange?style=flat-square)
+![extension](https://img.shields.io/badge/extension-v0.2.3-orange?style=flat-square)
 
 # Cltext
 
@@ -103,6 +103,11 @@ cltext [-h | --help]
     - to make the line a color use `<line c="#000000">`
     - to make a line a certain length use `<line l=2>`
     - you can use both `<line l=2 c="#000000">`
+
+- to add a outline use `<outline>your text</outline>`
+    - to make the outline a color use `<outline c="#000000">your text</outline>`
+    - to make a outline a certain thickness use `<outline t=2>your text</outline>`
+    - you can use both `<outline t=2 c="#000000">your text</outline>`
 
 # Made by:
 
