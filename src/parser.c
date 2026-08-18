@@ -17,7 +17,9 @@ static void add_segment(
     float bounce_amount,
     float shake_amount,
     SDL_Color *color,
-    float spin_amount
+    float spin_amount, 
+    SDL_Color outline_color, 
+    int outline_thickness
 ) {
     if (length == 0) {
         return;
@@ -51,6 +53,8 @@ static void add_segment(
     (*segments)[*count].shake_amount = shake_amount;
     (*segments)[*count].color = *color;
     (*segments)[*count].spin_ammount = spin_amount;
+    (*segments)[*count].outline_color = outline_color;
+    (*segments)[*count].outline_thickness = outline_thickness;
 
     (*count)++;
 }
@@ -74,6 +78,9 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SD
     float current_spin_amount = 0.0f;
     int current_size = 0;
     int current_line_length = 10;
+    int outline_thickness = 0;
+
+    SDL_Color outline_color = *base_text_color;
 
     const char *text_start = input;
     const char *pos = input;
@@ -121,7 +128,9 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SD
             current_bounce_amount,
             current_shake_amount,
             text_color,
-            current_spin_amount
+            current_spin_amount,
+            outline_color,
+            outline_thickness
         );
 
         size_t tag_length = tag_end - pos - 1;
@@ -331,9 +340,38 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SD
                         current_bounce_amount,
                         current_shake_amount,
                         &line_color,
-                        current_spin_amount
+                        current_spin_amount,
+                        outline_color,
+                        outline_thickness
                     );
                 }
+            }
+            else if (strncmp(tag, "outline", 7) == 0) {
+                current_style |= STYLE_OUTLINE;
+                outline_thickness = 1;
+                outline_color = *base_text_color;
+
+                char *t = strstr(tag, "t=");
+
+                if (t != NULL) {
+                    outline_thickness = atoi(t + 2);
+                }
+
+                char *c = strstr(tag, "c=\"");
+
+                if (c != NULL) {
+                    char hex[8] = "";
+
+                    strncpy(hex, c + 3, 7);
+                    hex[7] = '\0';
+
+                    outline_color = hex_to_sdl_color(hex);
+                }
+            }
+            else if (strcmp(tag, "/outline") == 0) {
+                current_style &= ~STYLE_OUTLINE;
+                outline_thickness = 0;
+                outline_color = *base_text_color;
             }
             else {
                 add_segment(
@@ -347,7 +385,9 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SD
                     current_bounce_amount,
                     current_shake_amount,
                     text_color,
-                    current_spin_amount
+                    current_spin_amount,
+                    outline_color,
+                    outline_thickness
                 );
             }
 
@@ -388,7 +428,9 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SD
         current_bounce_amount,
         current_shake_amount,
         text_color,
-        current_spin_amount
+        current_spin_amount,
+        outline_color,
+        outline_thickness
     );
 
     return count;

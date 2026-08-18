@@ -14,7 +14,8 @@ typedef enum {
     STYLE_SMALL  = 1 << 6,
     STYLE_GLITCH = 1 << 7,
     STYLE_REVERSE= 1 << 8,
-    STYLE_SPIN   = 1 << 9
+    STYLE_SPIN   = 1 << 9,
+    STYLE_OUTLINE= 1 << 10
 } TextStyle;
 
 typedef struct {
@@ -28,6 +29,9 @@ typedef struct {
     float spin_ammount;
 
     SDL_Color color;
+
+    int outline_thickness;
+    SDL_Color outline_color;
 } TextSegment;
 
 int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SDL_Color *text_color, SDL_Color *base_text_color, char (*title)[256]);

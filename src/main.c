@@ -257,195 +257,292 @@ int main(int argc, char *argv[]) {
         int x = 20;
         int y = 20;
 
-        for (int i = 0; i < segment_count; i++) {
+        for (int render_pass = 0; render_pass < 2; render_pass++) {
 
-            TTF_Font *font = normal_font;
-            /*
-             * Pick the base font.
-             * Bold + tilt will be handled using SDL_ttf font styling.
-             */
-            if (segments[i].style & STYLE_BIG) {
-                font = big_normal_font;
+            int outline_pass = (render_pass == 0);
+
+            x = 20;
+            y = 20;
+
+            for (int i = 0; i < segment_count; i++) {
+
+                TTF_Font *font = normal_font;
+
+                if (segments[i].style & STYLE_BIG) {
+                    font = big_normal_font;
+
+                    if (segments[i].style & STYLE_BOLD) {
+                        font = big_bold_font;
+                    }
+                    else if (segments[i].style & STYLE_TILT) {
+                        font = big_italic_font;
+                    }
+                }
+                else if (segments[i].style & STYLE_SMALL) {
+                    font = small_normal_font;
+
+                    if (segments[i].style & STYLE_BOLD) {
+                        font = small_bold_font;
+                    }
+                    else if (segments[i].style & STYLE_TILT) {
+                        font = small_italic_font;
+                    }
+                }
+                else {
+                    font = normal_font;
+
+                    if (segments[i].style & STYLE_BOLD) {
+                        font = bold_font;
+                    }
+                    else if (segments[i].style & STYLE_TILT) {
+                        font = italic_font;
+                    }
+                }
+
+                int font_style = TTF_STYLE_NORMAL;
+
                 if (segments[i].style & STYLE_BOLD) {
-                    font = big_bold_font;
-                }
-                else if (segments[i].style & STYLE_TILT) {
-                    font = big_italic_font;
-                }
-            }
-            else if (segments[i].style & STYLE_SMALL) {
-                font = small_normal_font;
-                if (segments[i].style & STYLE_BOLD) {
-                    font = small_bold_font;
-                }
-                else if (segments[i].style & STYLE_TILT) {
-                    font = small_italic_font;
-                }
-            }
-            else {
-                font = normal_font;
-                if (segments[i].style & STYLE_BOLD) {
-                    font = bold_font;
-                }
-                else if (segments[i].style & STYLE_TILT) {
-                    font = italic_font;
-                }
-            }
-
-            int font_style = TTF_STYLE_NORMAL;
-
-            if (segments[i].style & STYLE_BOLD) {
-                font_style |= TTF_STYLE_BOLD;
-            }
-
-            if (segments[i].style & STYLE_TILT) {
-                font_style |= TTF_STYLE_ITALIC;
-            }
-
-            TTF_SetFontStyle(font, font_style);
-
-            char reversed_text[8192];
-            char *text_start;
-
-            if (segments[i].style & STYLE_REVERSE) {
-                int len = strlen(segments[i].text);
-
-                for (int j = 0; j < len; j++) {
-                    reversed_text[j] = segments[i].text[len - 1 - j];
+                    font_style |= TTF_STYLE_BOLD;
                 }
 
-                reversed_text[len] = '\0';
-                text_start = reversed_text;
-            }
-            else {
-                text_start = segments[i].text;
-            }
-
-            int character_index = 0;
-
-            while (*text_start != '\0') {
-
-                /* Handle newlines */
-                if (*text_start == '\n') {
-                    x = 20;
-                    y += FONT_SIZE + LINE_SPACING;
-                    text_start++;
-                    character_index = 0;
-                    continue;
+                if (segments[i].style & STYLE_TILT) {
+                    font_style |= TTF_STYLE_ITALIC;
                 }
 
-                if (*text_start == '\r') {
-                    text_start++;
-                    continue;
+                TTF_SetFontStyle(font, font_style);
+
+                char reversed_text[8192];
+                char *text_start;
+
+                if (segments[i].style & STYLE_REVERSE) {
+                    int len = strlen(segments[i].text);
+
+                    for (int j = 0; j < len; j++) {
+                        reversed_text[j] = segments[i].text[len - 1 - j];
+                    }
+
+                    reversed_text[len] = '\0';
+                    text_start = reversed_text;
+                }
+                else {
+                    text_start = segments[i].text;
                 }
 
-                char character[2];
+                int character_index = 0;
 
-                character[0] = *text_start;
-                character[1] = '\0';
+                while (*text_start != '\0') {
 
-                float scale = 1.0f;
-                float height_b = 0.0f;
-                float shake_offset_x = 0.0f;
-                float shake_offset_y = 0.0f;
-                float glitch_offset_x = 0.0f;
-                float glitch_offset_y = 0.0f;
-                float angle = 0.0f;
+                    if (*text_start == '\n') {
+                        x = 20;
+                        y += FONT_SIZE + LINE_SPACING;
+                        text_start++;
+                        character_index = 0;
+                        continue;
+                    }
 
-                if (segments[i].style & STYLE_BOUNCE) {
-                    scale = wave_scale(
-                        segments[i].bounce_amount,
-                        time,
-                        character_index
-                    );
-                }
+                    if (*text_start == '\r') {
+                        text_start++;
+                        continue;
+                    }
 
-                if (segments[i].style & STYLE_WAVE) {
-                    height_b = bounce_height(
-                        segments[i].wave_amount,
-                        time,
-                        character_index
-                    );
-                }
+                    char character[2];
 
-                if (segments[i].style & STYLE_SHAKE) {
-                    shake_offset(
-                        segments[i].shake_amount,
-                        time,
-                        character_index,
-                        &shake_offset_x,
-                        &shake_offset_y
-                    );
-                }
+                    character[0] = *text_start;
+                    character[1] = '\0';
 
-                if (segments[i].style & STYLE_SPIN) {
-                    angle = spin_angle(
-                        segments[i].spin_ammount,
-                        time
-                    );
-                }
+                    float scale = 1.0f;
+                    float height_b = 0.0f;
+                    float shake_offset_x = 0.0f;
+                    float shake_offset_y = 0.0f;
+                    float glitch_offset_x = 0.0f;
+                    float glitch_offset_y = 0.0f;
+                    float angle = 0.0f;
 
-                if (segments[i].style & STYLE_GLITCH) {
-                    glitch_offset(&glitch_offset_x, &glitch_offset_y, &scale);
-                }
+                    if (segments[i].style & STYLE_BOUNCE) {
+                        scale = wave_scale(
+                            segments[i].bounce_amount,
+                            time,
+                            character_index
+                        );
+                    }
 
-                SDL_Surface *surface =
-                    TTF_RenderUTF8_Blended(font, character,segments[i].color);
+                    if (segments[i].style & STYLE_WAVE) {
+                        height_b = bounce_height(
+                            segments[i].wave_amount,
+                            time,
+                            character_index
+                        );
+                    }
 
-                if (surface == NULL) {
-                    printf(
-                        "Text rendering error: %s\n",
-                        TTF_GetError()
-                    );
-                    break;
-                }
+                    if (segments[i].style & STYLE_SHAKE) {
+                        shake_offset(
+                            segments[i].shake_amount,
+                            time,
+                            character_index,
+                            &shake_offset_x,
+                            &shake_offset_y
+                        );
+                    }
 
-                SDL_Texture *texture =
-                    SDL_CreateTextureFromSurface(
-                        renderer,
-                        surface
-                    );
+                    if (segments[i].style & STYLE_SPIN) {
+                        angle = spin_angle(
+                            segments[i].spin_ammount,
+                            time
+                        );
+                    }
 
-                if (texture == NULL) {
-                    printf(
-                        "Texture creation error: %s\n",
-                        SDL_GetError()
-                    );
+                    if (segments[i].style & STYLE_GLITCH) {
+                        glitch_offset(
+                            &glitch_offset_x,
+                            &glitch_offset_y,
+                            &scale
+                        );
+                    }
+
+                    SDL_Surface *surface =
+                        TTF_RenderUTF8_Blended(
+                            font,
+                            character,
+                            segments[i].color
+                        );
+
+                    SDL_Surface *outline_surface =
+                        TTF_RenderUTF8_Blended(
+                            font,
+                            character,
+                            (SDL_Color){255, 255, 255, 255}
+                        );
+
+                    if (surface == NULL || outline_surface == NULL) {
+                        printf(
+                            "Text rendering error: %s\n",
+                            TTF_GetError()
+                        );
+
+                        if (surface != NULL)
+                            SDL_FreeSurface(surface);
+
+                        if (outline_surface != NULL)
+                            SDL_FreeSurface(outline_surface);
+
+                        break;
+                    }
+
+                    SDL_Texture *texture =
+                        SDL_CreateTextureFromSurface(
+                            renderer,
+                            surface
+                        );
+
+                    SDL_Texture *outline_texture =
+                        SDL_CreateTextureFromSurface(
+                            renderer,
+                            outline_surface
+                        );
+
+                    if (texture == NULL || outline_texture == NULL) {
+                        printf(
+                            "Texture creation error: %s\n",
+                            SDL_GetError()
+                        );
+
+                        if (texture != NULL)
+                            SDL_DestroyTexture(texture);
+
+                        if (outline_texture != NULL)
+                            SDL_DestroyTexture(outline_texture);
+
+                        SDL_FreeSurface(surface);
+                        SDL_FreeSurface(outline_surface);
+
+                        break;
+                    }
+
+                    int width = (int)(surface->w * scale);
+                    int height = (int)(surface->h * scale);
+
+                    SDL_Rect rect = {
+                        x + shake_offset_x + glitch_offset_x,
+                        y + (surface->h - height) / 2
+                            - (int)height_b
+                            + shake_offset_y
+                            + glitch_offset_y,
+                        width,
+                        height
+                    };
+
+                    /* OUTLINE PASS */
+                    if (outline_pass &&
+                        (segments[i].style & STYLE_OUTLINE)) {
+
+                        SDL_SetTextureColorMod(
+                            outline_texture,
+                            segments[i].outline_color.r,
+                            segments[i].outline_color.g,
+                            segments[i].outline_color.b
+                        );
+
+                        int thickness = segments[i].outline_thickness;
+
+                        for (int ox = -thickness; ox <= thickness; ox++) {
+                            for (int oy = -thickness; oy <= thickness; oy++) {
+
+                                if (ox == 0 && oy == 0)
+                                    continue;
+
+                                SDL_Rect outline_rect = rect;
+
+                                outline_rect.x += ox;
+                                outline_rect.y += oy;
+
+                                SDL_RenderCopyEx(
+                                    renderer,
+                                    outline_texture,
+                                    NULL,
+                                    &outline_rect,
+                                    angle,
+                                    NULL,
+                                    SDL_FLIP_NONE
+                                );
+                            }
+                        }
+
+                        SDL_SetTextureColorMod(
+                            outline_texture,
+                            255,
+                            255,
+                            255
+                        );
+                    }
+
+                    /* TEXT PASS */
+                    if (!outline_pass) {
+                        SDL_RenderCopyEx(
+                            renderer,
+                            texture,
+                            NULL,
+                            &rect,
+                            angle,
+                            NULL,
+                            SDL_FLIP_NONE
+                        );
+                    }
+
+                    /*
+                    * Advance by the ORIGINAL character width,
+                    * not the scaled width.
+                    */
+                    x += surface->w;
+
+                    SDL_DestroyTexture(texture);
+                    SDL_DestroyTexture(outline_texture);
 
                     SDL_FreeSurface(surface);
-                    break;
+                    SDL_FreeSurface(outline_surface);
+
+                    text_start++;
+                    character_index++;
                 }
-
-                int width = (int)(surface->w * scale);
-                int height = (int)(surface->h * scale);
-
-                SDL_Rect rect = {
-                    x + shake_offset_x + glitch_offset_x,
-                    y + (surface->h - height) / 2 - (int)height_b + shake_offset_y + glitch_offset_y,
-                    width,
-                    height
-                };
-
-                SDL_RenderCopyEx(
-                    renderer,
-                    texture,
-                    NULL,
-                    &rect,
-                    angle,
-                    NULL,
-                    SDL_FLIP_NONE
-                );
-                /*
-                 * Advance by the ORIGINAL character width,
-                 * not the scaled width.
-                 */
-                x += surface->w;
-
-                SDL_DestroyTexture(texture);
-                SDL_FreeSurface(surface);
-
-                text_start++;
-                character_index++;
             }
         }
 
