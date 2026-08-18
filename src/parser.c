@@ -73,6 +73,7 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SD
     float current_glitch_amount = 0.0f;
     float current_spin_amount = 0.0f;
     int current_size = 0;
+    int current_line_length = 10;
 
     const char *text_start = input;
     const char *pos = input;
@@ -285,6 +286,54 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SD
             else if (strcmp(tag, "/spin") == 0) {
                 current_style &= ~STYLE_SPIN;
                 current_spin_amount = 0.0f;
+            }
+            else if (strncmp(tag, "line", 4) == 0) {
+                int line_length = 1;
+                SDL_Color line_color = *base_text_color;
+
+                char *l = strstr(tag, "l=");
+
+                if (l != NULL) {
+                    line_length = atoi(l + 2);
+                }
+
+                char *c = strstr(tag, "c=\"");
+
+                if (c != NULL) {
+                    char line_color_hex[8] = "";
+                    
+                    strncpy(line_color_hex, c + 3, 7);
+                    line_color_hex[7] = '\0';
+
+                    line_color = hex_to_sdl_color(line_color_hex);
+                }
+
+                if (line_length < 1) {
+                    line_length = 1;
+                }
+
+                int dash_count = line_length * 10;
+
+                char *line = malloc(dash_count + 1);
+
+                if (line != NULL) {
+                    memset(line, '-', dash_count);
+                    line[dash_count] = '\0';
+
+                    add_segment(
+                        segments,
+                        &count,
+                        &capacity,
+                        line,
+                        dash_count,
+                        current_style,
+                        current_wave_amount,
+                        current_bounce_amount,
+                        current_shake_amount,
+                        &line_color,
+                        current_spin_amount
+                    );
+                }
             }
             else {
                 add_segment(
