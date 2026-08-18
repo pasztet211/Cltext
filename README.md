@@ -12,6 +12,20 @@ markup language
 
 https://github.com/user-attachments/assets/34cc6d67-3ca6-4160-9af5-2f3584ac2ee2
 
+code:
+```clt
+<txtcolor c="#000000">
+<bgcolor c="#ff0000">
+<title name="example">
+<reverse>there is this</reverse> <bold><wave a=2>thingy</wave></bold> called a <bold>particle</bold>
+<shake a=1>it</shake> is <spin a=1>very</spin> <tilt><small>small.</small></tilt>
+<?==
+ comment 
+==?>
+<bold><glitch>it</glitch> is <wave a=0.5>part <big>of</big> an <bounce a=0.5><color c="#0000ff">atom</color></bounce></wave>.</bold>
+<?== other comment ==?>
+```
+
 ## Installation and file extension:
 
 1. clone the repo to `C:\Cltext`
