@@ -96,6 +96,13 @@ cltext [-h | --help]
 
 - to add a comment use `<?== comment ==?>` or `<?==comment==?>`
 
+### Miscellaneous: ![works](https://img.shields.io/badge/status-stable-green?style=flat-square)
+
+- to add a line use `<line>`
+    - to make the line a color use `<line c="#000000">`
+    - to make a line a certain length use `<line l=2>`
+    - you can use both `<line l=2 c="#000000">`
+
 # Made by:
 
 - [pasztet211](https://github.com/pasztet211) ![pasztet](https://img.shields.io/badge/creator-orange?style=flat-square)
