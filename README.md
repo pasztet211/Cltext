@@ -3,7 +3,7 @@
 ![SDL2_ttf](https://img.shields.io/badge/SDL2__ttf-required-green?style=flat-square)
 
 ![version](https://img.shields.io/badge/version-v0.2.1-orange?style=flat-square)
-![extension](https://img.shields.io/badge/extension-v0.2.41-orange?style=flat-square)
+![extension](https://img.shields.io/badge/extension-v0.2.42-orange?style=flat-square)
 
 # Cltext
 

@@ -13,7 +13,7 @@
 #define LINE_SPACING 6
 
 #define VERSION "v0.2.1"
-#define EXTENSION_VER "v0.2.41"
+#define EXTENSION_VER "v0.2.42"
 SDL_Color base_text_color = {255,255,255,255};
 
 int main(int argc, char *argv[]) {
