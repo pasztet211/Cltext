@@ -27,6 +27,7 @@ code:
 <bold><glitch>it</glitch> is <wave a=0.5>part <big>of</big> an <bounce a=0.5><color c="#0000ff"><outline t=2 c="#ffffff">atom</outline></color></bounce></wave>.</bold>
 <bold><line c="#ffffff" l=3></bold>
 <?== other comment ==?>
+<bold><randomcolor>text</randomcolor></bold> (i gave up)
 ```
 
 ## Installation and file extension:
