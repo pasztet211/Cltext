@@ -2,8 +2,8 @@
 ![SDL2](https://img.shields.io/badge/SDL2-required-green?style=flat-square)
 ![SDL2_ttf](https://img.shields.io/badge/SDL2__ttf-required-green?style=flat-square)
 
-![version](https://img.shields.io/badge/version-v0.2.0-orange?style=flat-square)
-![extension](https://img.shields.io/badge/extension-v0.2.31-orange?style=flat-square)
+![version](https://img.shields.io/badge/version-v0.2.1-orange?style=flat-square)
+![extension](https://img.shields.io/badge/extension-v0.2.41-orange?style=flat-square)
 
 # Cltext
 
@@ -111,6 +111,10 @@ cltext [-h | --help]
     - to make a outline a certain thickness use `<outline t=2>your text</outline>`
     - you can use both `<outline t=2 c="#000000">your text</outline>`
 
+- to make each letter of text a random color use `<randomcolor>your text</randomcolor>`[^first]
+
 # Made by:
 
 - [pasztet211](https://github.com/pasztet211) ![pasztet](https://img.shields.io/badge/creator-orange?style=flat-square)
+
+[^first]: to specify a random **VIBRANT** color

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 
@@ -11,11 +12,12 @@
 #define FONT_SIZE 14
 #define LINE_SPACING 6
 
-#define VERSION "v0.2.0"
-#define EXTENSION_VER "v0.2.31"
+#define VERSION "v0.2.1"
+#define EXTENSION_VER "v0.2.41"
 SDL_Color base_text_color = {255,255,255,255};
 
 int main(int argc, char *argv[]) {
+    srand((unsigned int)time(NULL));
     if (argc < 2) {
         printf("Usage: cltext <file.clt> or cltext [-v [extension | cltext]| --version [extension | cltext]] [-h |--help]\n");
         return 1;

@@ -2,9 +2,61 @@
 #include <stdlib.h>
 #include <string.h>
 #include <SDL2/SDL.h>
+#include <math.h>
+#include <time.h>
 
 #include "parser.h"
 #include "check_valid_tag.h"
+
+static SDL_Color random_color(void) {
+    float h = (float)(rand() % 360);
+    float s = 0.85f + (float)rand() / RAND_MAX * 0.15f;
+    float v = 0.85f + (float)rand() / RAND_MAX * 0.15f;
+
+    float c = v * s;
+    float x = c * (1.0f - fabsf(fmodf(h / 60.0f, 2.0f) - 1.0f));
+    float m = v - c;
+
+    float r, g, b;
+
+    if (h < 60.0f) {
+        r = c;
+        g = x;
+        b = 0.0f;
+    }
+    else if (h < 120.0f) {
+        r = x;
+        g = c;
+        b = 0.0f;
+    }
+    else if (h < 180.0f) {
+        r = 0.0f;
+        g = c;
+        b = x;
+    }
+    else if (h < 240.0f) {
+        r = 0.0f;
+        g = x;
+        b = c;
+    }
+    else if (h < 300.0f) {
+        r = x;
+        g = 0.0f;
+        b = c;
+    }
+    else {
+        r = c;
+        g = 0.0f;
+        b = x;
+    }
+
+    return (SDL_Color){
+        (Uint8)((r + m) * 255.0f),
+        (Uint8)((g + m) * 255.0f),
+        (Uint8)((b + m) * 255.0f),
+        255
+    };
+}
 
 static void add_segment(
     TextSegment **segments,
@@ -17,11 +69,35 @@ static void add_segment(
     float bounce_amount,
     float shake_amount,
     SDL_Color *color,
-    float spin_amount, 
-    SDL_Color outline_color, 
+    float spin_amount,
+    SDL_Color outline_color,
     int outline_thickness
 ) {
     if (length == 0) {
+        return;
+    }
+
+    if (style & STYLE_RANDOMCOLOR) {
+        for (size_t i = 0; i < length; i++) {
+            SDL_Color color = random_color();
+
+            add_segment(
+                segments,
+                count,
+                capacity,
+                &text[i],
+                1,
+                style & ~STYLE_RANDOMCOLOR,
+                wave_amount,
+                bounce_amount,
+                shake_amount,
+                &color,
+                spin_amount,
+                outline_color,
+                outline_thickness
+            );
+        }
+
         return;
     }
 
@@ -372,6 +448,12 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SD
                 current_style &= ~STYLE_OUTLINE;
                 outline_thickness = 0;
                 outline_color = *base_text_color;
+            }
+            else if (strcmp(tag, "randomcolor") == 0) {
+                current_style |= STYLE_RANDOMCOLOR;
+            }
+            else if (strcmp(tag, "/randomcolor") == 0) {
+                current_style &= ~STYLE_RANDOMCOLOR;
             }
             else {
                 add_segment(
