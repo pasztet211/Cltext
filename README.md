@@ -34,7 +34,7 @@ code:
 
 1. clone the repo to `C:\Cltext`
 2. add `C:\Cltext` to **PATH**
-    * if the SDL2 DLLs [egg. `SDL2_ttf.dll`] from [`/libs`](./libs) are not in **your system PATH**, move the contents of `/libs` to the main folder
+    * if the SDL2 DLLs [egg. `SDL2_ttf.dll`] from [`/libs`](./libs) are not in **your system PATH**[^second], move the contents of `/libs` to the main folder
 3. the file extension for ***Cltext*** is `.clt`
 4. **(Optional)** install the Cltext VS Code extension
     * use `code --install-extension C:\Cltext\optionals\cltext-support-*.vsix` to install
@@ -119,3 +119,4 @@ cltext [-h | --help]
 - [pasztet211](https://github.com/pasztet211) ![pasztet](https://img.shields.io/badge/creator-orange?style=flat-square)
 
 [^first]: to specify a random **VIBRANT** color
+[^second]:here is a guide 🔗[how to add to path](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/)
