@@ -68,9 +68,9 @@ https://github.com/user-attachments/assets/0478ef44-1c99-48fd-8d0c-ef54d2559c34
 
 3. Add `C:\Cltext` to **PATH**[^second]
 
-- The file extension for **Cltext** is `.clt`
+The file extension for **Cltext** is `.clt`
 
-- **(Optional)** Install the Cltext VS Code extension
+**(Optional)** Install the Cltext VS Code extension
    * Use:
      ```bash
      code --install-extension C:\Cltext\optionals\cltext-support-*.vsix
