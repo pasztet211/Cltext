@@ -1,11 +1,3 @@
-
-
-https://github.com/user-attachments/assets/34ee78cf-ef9a-45b1-bdef-27b1d930e4c5
-
-
-
-https://github.com/user-attachments/assets/c922c2cf-e25f-4df0-8177-a1917419e8d4
-
 ![C23](https://img.shields.io/badge/C-C23-blue?style=flat-square)
 ![SDL2](https://img.shields.io/badge/SDL2-required-green?style=flat-square)
 ![SDL2_ttf](https://img.shields.io/badge/SDL2__ttf-required-green?style=flat-square)
