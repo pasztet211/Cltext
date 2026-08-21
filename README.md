@@ -53,12 +53,28 @@ https://github.com/user-attachments/assets/0478ef44-1c99-48fd-8d0c-ef54d2559c34
 
 ## Installation and file extension:
 
-1. clone the repo to `C:\Cltext`
-2. add `C:\Cltext` to **PATH**
-    * if the SDL2 DLLs [egg. `SDL2_ttf.dll`] from [`/libs`](./libs) are not in **your system PATH**[^second], move the contents of `/libs` to the main folder
-3. the file extension for ***Cltext*** is `.clt`
-4. **(Optional)** install the Cltext VS Code extension
-    * use `code --install-extension C:\Cltext\optionals\cltext-support-*.vsix` to install
+**Option 1: Clone the repo**
+
+1. Clone the repo to `C:\Cltext`
+   * If the SDL2 DLLs (e.g. `SDL2_ttf.dll`) from [`/libs`](./libs) are not in **your system PATH**, move the contents of `/libs` to the main folder.
+
+2. Add `C:\Cltext` to **PATH**[^second]
+
+**Option 2: Quick download**
+
+1. Download [`Cltext-v0.2.3-windows.zip`](./Cltext-v0.2.3-windows.zip)
+   * The ZIP already includes Cltext and the required SDL2 DLLs.
+2. Unzip it and put the contents into `C:\Cltext`
+
+3. Add `C:\Cltext` to **PATH**[^second]
+
+- The file extension for **Cltext** is `.clt`
+
+- **(Optional)** Install the Cltext VS Code extension
+   * Use:
+     ```bash
+     code --install-extension C:\Cltext\optionals\cltext-support-*.vsix
+     ```
 
 ## Quick Start:
 
