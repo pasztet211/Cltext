@@ -64,6 +64,9 @@ https://github.com/user-attachments/assets/0478ef44-1c99-48fd-8d0c-ef54d2559c34
 
 1. Download [`Cltext-v0.2.3-windows.zip`](./Cltext-v0.2.3-windows.zip)
    * The ZIP already includes Cltext and the required SDL2 DLLs.
+  
+<img width="957" height="117" alt="download help" src="https://github.com/user-attachments/assets/3eb41568-0b2e-4a8f-9ab2-f6c62965e10a" />
+
 2. Unzip it and put the contents into `C:\Cltext`
 
 3. Add `C:\Cltext` to **PATH**[^second]
