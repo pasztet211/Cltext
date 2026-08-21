@@ -1,3 +1,11 @@
+
+
+https://github.com/user-attachments/assets/34ee78cf-ef9a-45b1-bdef-27b1d930e4c5
+
+
+
+https://github.com/user-attachments/assets/c922c2cf-e25f-4df0-8177-a1917419e8d4
+
 ![C23](https://img.shields.io/badge/C-C23-blue?style=flat-square)
 ![SDL2](https://img.shields.io/badge/SDL2-required-green?style=flat-square)
 ![SDL2_ttf](https://img.shields.io/badge/SDL2__ttf-required-green?style=flat-square)
@@ -61,6 +69,8 @@ https://github.com/user-attachments/assets/0478ef44-1c99-48fd-8d0c-ef54d2559c34
 2. Add `C:\Cltext` to **PATH**[^second]
 
 **Option 2: Quick download**
+
+https://github.com/user-attachments/assets/175a503a-7cc4-4139-9255-a0fb6558f7bf
 
 1. Download [`Cltext-v0.2.3-windows.zip`](./Cltext-v0.2.3-windows.zip)
    * **If you don't know how to download the .zip:**
