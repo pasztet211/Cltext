@@ -48,7 +48,7 @@ https://github.com/user-attachments/assets/0478ef44-1c99-48fd-8d0c-ef54d2559c34
 
 https://github.com/user-attachments/assets/ea7cb2ac-ad91-4ebc-a602-1f0678b0b6ae
 
-1. Download [`Cltext-v0.2.3-windows.zip`](./Cltext-v0.2.3-windows.zip)
+1. Download [`Cltext-v0.2.4-windows.zip`](./Cltext-v0.2.4-windows.zip)
    * **If you don't know how to download the .zip:**
    <img width="957" height="117" alt="download help" src="https://github.com/user-attachments/assets/3eb41568-0b2e-4a8f-9ab2-f6c62965e10a"/>
    
