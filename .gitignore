@@ -1,5 +1,7 @@
 .vscode/
 .assets/
+.quick-download/
 
 save.sh
 push.sh
+zip-download.sh
