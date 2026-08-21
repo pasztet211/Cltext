@@ -11,31 +11,5 @@
 <bold><line c="#ffffff" l=3></bold>
 <?== other comment ==?>
 <bold><randomcolor>text</randomcolor></bold> (i gave up)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<newlines a=27>
 <bold>secret text</bold> (you can scroll)

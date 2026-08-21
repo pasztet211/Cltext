@@ -455,6 +455,42 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SD
             else if (strcmp(tag, "/randomcolor") == 0) {
                 current_style &= ~STYLE_RANDOMCOLOR;
             }
+            else if (strncmp(tag, "newlines", 8) == 0) {
+                int line_amm = 1;
+
+                char *a = strstr(tag, "a=");
+
+                if (a != NULL) {
+                    line_amm = atoi(a + 2);
+                }
+
+                if (line_amm < 1) {
+                    line_amm = 1;
+                }
+
+                char *lines = malloc(line_amm + 1);
+
+                if (lines != NULL) {
+                    memset(lines, '\n', line_amm);
+                    lines[line_amm] = '\0';
+
+                    add_segment(
+                        segments,
+                        &count,
+                        &capacity,
+                        lines,
+                        line_amm,
+                        current_style,
+                        current_wave_amount,
+                        current_bounce_amount,
+                        current_shake_amount,
+                        text_color,
+                        current_spin_amount,
+                        outline_color,
+                        outline_thickness
+                    );
+                }
+            }
             else {
                 add_segment(
                     segments,
@@ -477,7 +513,8 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SD
                 line_start &&
                 (strncmp(tag, "txtcolor", 8) == 0 ||
                 strncmp(tag, "bgcolor", 7) == 0 ||
-                strncmp(tag, "title", 5) == 0)
+                strncmp(tag, "title", 5) == 0 ||
+                strncmp(tag, "newlines", 8) == 0)
             ) {
                 const char *line_end = tag_end + 1;
 

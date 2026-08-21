@@ -2,7 +2,7 @@
 ![SDL2](https://img.shields.io/badge/SDL2-required-green?style=flat-square)
 ![SDL2_ttf](https://img.shields.io/badge/SDL2__ttf-required-green?style=flat-square)
 
-![version](https://img.shields.io/badge/version-v0.2.3-orange?style=flat-square)
+![version](https://img.shields.io/badge/version-v0.2.4-orange?style=flat-square)
 ![extension](https://img.shields.io/badge/extension-v0.2.42-orange?style=flat-square)
 
 # Cltext
@@ -30,23 +30,7 @@ https://github.com/user-attachments/assets/0478ef44-1c99-48fd-8d0c-ef54d2559c34
 <bold><line c="#ffffff" l=3></bold>
 <?== other comment ==?>
 <bold><randomcolor>text</randomcolor></bold> (i gave up)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<newlines a=27>
 <bold>secret text</bold> (you can scroll)
 ```
 </details>
@@ -66,7 +50,7 @@ https://github.com/user-attachments/assets/ea7cb2ac-ad91-4ebc-a602-1f0678b0b6ae
 
 1. Download [`Cltext-v0.2.3-windows.zip`](./Cltext-v0.2.3-windows.zip)
    * **If you don't know how to download the .zip:**
-   <img width="957" height="117" alt="download help" src="https://github.com/user-attachments/assets/3eb41568-0b2e-4a8f-9ab2-f6c62965e10a" />
+   <img width="957" height="117" alt="download help" src="https://github.com/user-attachments/assets/3eb41568-0b2e-4a8f-9ab2-f6c62965e10a"/>
    
    * The ZIP already includes Cltext and the required SDL2 DLLs.
 
@@ -156,6 +140,8 @@ cltext [-h | --help]
     - you can use both `<outline t=2 c="#000000">your text</outline>`
 
 - to make each letter of text a random color use `<randomcolor>your text</randomcolor>`[^first]
+
+- to add multiple newlines in one go use `<newlines a=amount>`
 
 ## More Info:
 
