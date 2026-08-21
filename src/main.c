@@ -12,9 +12,12 @@
 #define FONT_SIZE 14
 #define LINE_SPACING 6
 
-#define VERSION "v0.2.1"
+#define VERSION "v0.2.3"
 #define EXTENSION_VER "v0.2.42"
 SDL_Color base_text_color = {255,255,255,255};
+
+int scroll_y = 0;
+int content_height = 0;
 
 int main(int argc, char *argv[]) {
     srand((unsigned int)time(NULL));
@@ -79,6 +82,21 @@ int main(int argc, char *argv[]) {
     char title[256] = "Cltext";
 
     int segment_count = parse_text(text, &segments, &bgcolor, &text_color, &base_text_color, &title);
+
+    int content_height = 20;
+
+    for (int i = 0; i < segment_count; i++) {
+        for (char *p = segments[i].text; *p != '\0'; p++) {
+            if (*p == '\n') {
+                content_height += FONT_SIZE + LINE_SPACING;
+            }
+        }
+    }
+
+    content_height += FONT_SIZE;
+
+    if (content_height > 600)
+        content_height += 20;
 
     if (segment_count < 0) {
         printf("Parser error.\n");
@@ -242,6 +260,9 @@ int main(int argc, char *argv[]) {
             if (event.type == SDL_QUIT) {
                 running = 0;
             }
+            if (event.type == SDL_MOUSEWHEEL) {
+                scroll_y -= event.wheel.y * 40;
+            }
         }
 
         float time = SDL_GetTicks() / 1000.0f;
@@ -257,14 +278,25 @@ int main(int argc, char *argv[]) {
         SDL_RenderClear(renderer);
 
         int x = 20;
-        int y = 20;
+        int y = 20 - scroll_y;
+
+        int max_scroll_y = content_height - 600;
+
+        if (max_scroll_y < 0)
+            max_scroll_y = 0;
+
+        if (scroll_y < 0)
+            scroll_y = 0;
+
+        if (scroll_y > max_scroll_y)
+            scroll_y = max_scroll_y;
 
         for (int render_pass = 0; render_pass < 2; render_pass++) {
 
             int outline_pass = (render_pass == 0);
 
             x = 20;
-            y = 20;
+            y = 20 - scroll_y;
 
             for (int i = 0; i < segment_count; i++) {
 
@@ -337,11 +369,16 @@ int main(int argc, char *argv[]) {
                     if (*text_start == '\n') {
                         x = 20;
                         y += FONT_SIZE + LINE_SPACING;
+
+                        int actual_y = y + scroll_y;
+
+                        if (actual_y > content_height)
+                            content_height = actual_y;
+
                         text_start++;
                         character_index = 0;
                         continue;
                     }
-
                     if (*text_start == '\r') {
                         text_start++;
                         continue;

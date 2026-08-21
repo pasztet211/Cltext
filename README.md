@@ -2,7 +2,7 @@
 ![SDL2](https://img.shields.io/badge/SDL2-required-green?style=flat-square)
 ![SDL2_ttf](https://img.shields.io/badge/SDL2__ttf-required-green?style=flat-square)
 
-![version](https://img.shields.io/badge/version-v0.2.1-orange?style=flat-square)
+![version](https://img.shields.io/badge/version-v0.2.3-orange?style=flat-square)
 ![extension](https://img.shields.io/badge/extension-v0.2.42-orange?style=flat-square)
 
 # Cltext
@@ -13,7 +13,9 @@ markup language
 
 https://github.com/user-attachments/assets/84a014e2-0dab-4864-99a3-f8a4c24a43d4
 
-code:
+<details>
+<summary>Code</summary>
+
 ```clt
 <txtcolor c="#000000">
 <bgcolor c="#ff0000">
@@ -28,7 +30,26 @@ code:
 <bold><line c="#ffffff" l=3></bold>
 <?== other comment ==?>
 <bold><randomcolor>text</randomcolor></bold> (i gave up)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<bold>secret text</bold> (you can scroll)
 ```
+</details>
 
 ## Installation and file extension:
 
@@ -113,6 +134,10 @@ cltext [-h | --help]
     - you can use both `<outline t=2 c="#000000">your text</outline>`
 
 - to make each letter of text a random color use `<randomcolor>your text</randomcolor>`[^first]
+
+## More Info:
+
+- if your document does not fit on the screen you can scroll to see more
 
 # Made by:
 
