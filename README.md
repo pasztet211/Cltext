@@ -62,7 +62,7 @@ https://github.com/user-attachments/assets/0478ef44-1c99-48fd-8d0c-ef54d2559c34
 
 **Option 2: Quick download**
 
-https://github.com/user-attachments/assets/175a503a-7cc4-4139-9255-a0fb6558f7bf
+https://github.com/user-attachments/assets/e3e220ee-21cd-467c-b39a-19ce48e15fe9
 
 1. Download [`Cltext-v0.2.3-windows.zip`](./Cltext-v0.2.3-windows.zip)
    * **If you don't know how to download the .zip:**
