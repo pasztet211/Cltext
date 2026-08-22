@@ -20,6 +20,7 @@ https://github.com/user-attachments/assets/8c5f4b83-3029-4f03-8ffb-5ad903d8446a
 <txtcolor c="#000000">
 <bgcolor c="#ff0000">
 <title name="example">
+<font font="Segoe UI">
 <bold><line l=3 c="#ffffff"></bold>
 <reverse>there is this</reverse> <bold><wave a=2>thingy</wave></bold> called a <bold>particle</bold>
 <shake a=1>it</shake> is <spin a=1>very</spin> <tilt><small>small.</small></tilt>
