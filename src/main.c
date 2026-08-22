@@ -13,7 +13,7 @@
 #define FONT_SIZE 14
 #define LINE_SPACING 6
 
-#define VERSION "v0.2.5"
+#define VERSION "v0.2.6"
 #define EXTENSION_VER "v0.2.5"
 SDL_Color base_text_color = {255,255,255,255};
 
@@ -21,6 +21,11 @@ int scroll_y = 0;
 int content_height = 0;
 
 char font_name[64] = "Arial";
+
+int dragging = 0;
+int drag_start_y = 0;
+int scroll_start_y = 0;
+
 int main(int argc, char *argv[]) {
     srand((unsigned int)time(NULL));
     if (argc < 2) {
@@ -189,6 +194,21 @@ int main(int argc, char *argv[]) {
             }
             if (event.type == SDL_MOUSEWHEEL) {
                 scroll_y -= event.wheel.y * 40;
+            }
+            if (event.type == SDL_MOUSEBUTTONDOWN &&
+                event.button.button == SDL_BUTTON_LEFT) {
+
+                dragging = 1;
+                drag_start_y = event.button.y;
+                scroll_start_y = scroll_y;
+            }
+            if (event.type == SDL_MOUSEMOTION && dragging) {
+                scroll_y = scroll_start_y - (event.motion.y - drag_start_y);
+            }
+            if (event.type == SDL_MOUSEBUTTONUP &&
+                event.button.button == SDL_BUTTON_LEFT) {
+
+                dragging = 0;
             }
         }
 
