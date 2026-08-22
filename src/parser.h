@@ -35,7 +35,7 @@ typedef struct {
     SDL_Color outline_color;
 } TextSegment;
 
-int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SDL_Color *text_color, SDL_Color *base_text_color, char (*title)[256]);
+int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SDL_Color *text_color, SDL_Color *base_text_color, char (*title)[256], char (*font_name)[64]);
 
 void free_segments(TextSegment *segments, int count);
 

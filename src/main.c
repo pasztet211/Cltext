@@ -8,17 +8,19 @@
 #include "parser.h"
 #include "animations.h"
 #include "info.h"
+#include "fonts.h"
 
 #define FONT_SIZE 14
 #define LINE_SPACING 6
 
-#define VERSION "v0.2.4"
-#define EXTENSION_VER "v0.2.42"
+#define VERSION "v0.2.5"
+#define EXTENSION_VER "v0.2.5"
 SDL_Color base_text_color = {255,255,255,255};
 
 int scroll_y = 0;
 int content_height = 0;
 
+char font_name[64] = "Arial";
 int main(int argc, char *argv[]) {
     srand((unsigned int)time(NULL));
     if (argc < 2) {
@@ -81,7 +83,7 @@ int main(int argc, char *argv[]) {
     SDL_Color text_color = {255, 255, 255, 255};
     char title[256] = "Cltext";
 
-    int segment_count = parse_text(text, &segments, &bgcolor, &text_color, &base_text_color, &title);
+    int segment_count = parse_text(text, &segments, &bgcolor, &text_color, &base_text_color, &title, &font_name);
 
     int content_height = 20;
 
@@ -164,84 +166,9 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    TTF_Font *normal_font = TTF_OpenFont(
-        "C:\\Windows\\Fonts\\arial.ttf",
-        FONT_SIZE
-    );
+    Fonts fonts = {0};
 
-    TTF_Font *bold_font = TTF_OpenFont(
-        "C:\\Windows\\Fonts\\arialbd.ttf",
-        FONT_SIZE
-    );
-
-    TTF_Font *italic_font = TTF_OpenFont(
-        "C:\\Windows\\Fonts\\ariali.ttf",
-        FONT_SIZE
-    );
-
-    TTF_Font *big_normal_font = TTF_OpenFont(
-        "C:\\Windows\\Fonts\\arial.ttf",
-        FONT_SIZE + 4
-    );
-
-    TTF_Font *big_bold_font = TTF_OpenFont(
-        "C:\\Windows\\Fonts\\arialbd.ttf",
-        FONT_SIZE + 4
-    );
-
-    TTF_Font *big_italic_font = TTF_OpenFont(
-        "C:\\Windows\\Fonts\\ariali.ttf",
-        FONT_SIZE + 4
-    );
-
-    TTF_Font *small_normal_font = TTF_OpenFont(
-        "C:\\Windows\\Fonts\\arial.ttf",
-        FONT_SIZE - 2
-    );
-
-    TTF_Font *small_bold_font = TTF_OpenFont(
-        "C:\\Windows\\Fonts\\arialbd.ttf",
-        FONT_SIZE - 2
-    );
-
-    TTF_Font *small_italic_font = TTF_OpenFont(
-        "C:\\Windows\\Fonts\\ariali.ttf",
-        FONT_SIZE - 2
-    );
-    
-
-    if (normal_font == NULL || bold_font == NULL || italic_font == NULL
-       || big_normal_font == NULL || big_bold_font == NULL || big_italic_font == NULL
-       || small_normal_font == NULL || small_bold_font == NULL || small_italic_font == NULL) {
-        printf("Font error: %s\n", TTF_GetError());
-
-        if (normal_font != NULL)
-            TTF_CloseFont(normal_font);
-
-        if (bold_font != NULL)
-            TTF_CloseFont(bold_font);
-
-        if (italic_font != NULL)
-            TTF_CloseFont(italic_font);
-
-        if (big_normal_font != NULL)
-            TTF_CloseFont(big_normal_font);
-
-        if (big_bold_font != NULL)
-            TTF_CloseFont(big_bold_font);
-
-        if (big_italic_font != NULL)
-            TTF_CloseFont(big_italic_font);
-
-        if (small_normal_font != NULL)
-            TTF_CloseFont(small_normal_font);
-
-        if (small_bold_font != NULL)
-            TTF_CloseFont(small_bold_font);
-
-        if (small_italic_font != NULL)
-            TTF_CloseFont(small_italic_font);
-
+    if (!load_fonts(&fonts, font_name)) {
         SDL_DestroyRenderer(renderer);
         SDL_DestroyWindow(window);
         TTF_Quit();
@@ -300,36 +227,36 @@ int main(int argc, char *argv[]) {
 
             for (int i = 0; i < segment_count; i++) {
 
-                TTF_Font *font = normal_font;
+                TTF_Font *font = fonts.normal;
 
                 if (segments[i].style & STYLE_BIG) {
-                    font = big_normal_font;
+                    font = fonts.big_normal;
 
                     if (segments[i].style & STYLE_BOLD) {
-                        font = big_bold_font;
+                        font = fonts.big_bold;
                     }
                     else if (segments[i].style & STYLE_TILT) {
-                        font = big_italic_font;
+                        font = fonts.big_italic;
                     }
                 }
                 else if (segments[i].style & STYLE_SMALL) {
-                    font = small_normal_font;
+                    font = fonts.small_normal;
 
                     if (segments[i].style & STYLE_BOLD) {
-                        font = small_bold_font;
+                        font = fonts.small_bold;
                     }
                     else if (segments[i].style & STYLE_TILT) {
-                        font = small_italic_font;
+                        font = fonts.small_italic;
                     }
                 }
                 else {
-                    font = normal_font;
+                    font = fonts.normal;
 
                     if (segments[i].style & STYLE_BOLD) {
-                        font = bold_font;
+                        font = fonts.bold;
                     }
                     else if (segments[i].style & STYLE_TILT) {
-                        font = italic_font;
+                        font = fonts.italic;
                     }
                 }
 
@@ -588,10 +515,8 @@ int main(int argc, char *argv[]) {
         SDL_RenderPresent(renderer);
     }
 
-    TTF_SetFontStyle(normal_font, TTF_STYLE_NORMAL);
-    TTF_CloseFont(bold_font);
-    TTF_CloseFont(normal_font);
-    TTF_CloseFont(italic_font);
+    TTF_SetFontStyle(fonts.normal, TTF_STYLE_NORMAL);
+    free_fonts(&fonts);
 
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);

@@ -135,7 +135,7 @@ static void add_segment(
     (*count)++;
 }
 
-int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SDL_Color *text_color, SDL_Color *base_text_color, char (*title)[256]) {
+int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SDL_Color *text_color, SDL_Color *base_text_color, char (*title)[256], char (*font_name)[64]) {
     int capacity = 8;
     int count = 0;
 
@@ -491,6 +491,31 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SD
                     );
                 }
             }
+            else if (strncmp(tag, "font", 4) == 0) {
+                char *fontname = "Arial";
+                char *font = strstr(tag, "font=\"");
+
+                if (font != NULL) {
+                    font += 6;
+
+                    char *end = strchr(font, '"');
+
+                    if (end != NULL) {
+                        size_t length = end - font;
+
+                        if (length > 255) {
+                            length = 255;
+                        }
+
+                        strncpy((*font_name), font, length);
+                        (*font_name)[length] = '\0';
+                    }
+                }
+                else {
+                    strncpy((*font_name), fontname, 5);
+                    (*font_name)[5] = '\0';
+                }
+            }
             else {
                 add_segment(
                     segments,
@@ -514,7 +539,8 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SD
                 (strncmp(tag, "txtcolor", 8) == 0 ||
                 strncmp(tag, "bgcolor", 7) == 0 ||
                 strncmp(tag, "title", 5) == 0 ||
-                strncmp(tag, "newlines", 8) == 0)
+                strncmp(tag, "newlines", 8) == 0 ||
+                strncmp(tag, "font", 4) == 0)
             ) {
                 const char *line_end = tag_end + 1;
 

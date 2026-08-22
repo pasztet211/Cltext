@@ -2,8 +2,8 @@
 ![SDL2](https://img.shields.io/badge/SDL2-required-green?style=flat-square)
 ![SDL2_ttf](https://img.shields.io/badge/SDL2__ttf-required-green?style=flat-square)
 
-![version](https://img.shields.io/badge/version-v0.2.4-orange?style=flat-square)
-![extension](https://img.shields.io/badge/extension-v0.2.42-orange?style=flat-square)
+![version](https://img.shields.io/badge/version-v0.2.5-orange?style=flat-square)
+![extension](https://img.shields.io/badge/extension-v0.2.5-orange?style=flat-square)
 
 # Cltext
 
@@ -122,6 +122,7 @@ cltext [-h | --help]
 - to change the document background color use `<bgcolor c="#ff0000">`
 - to change the document default text color from that point onward use `<txtcolor c="#000000">`
 - to change window title use `<title name="your title">`
+- to change document font use `<font font="font name">`
 
 ### Comments: ![works](https://img.shields.io/badge/status-stable-green?style=flat-square)
 

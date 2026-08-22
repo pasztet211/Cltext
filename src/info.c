@@ -23,6 +23,7 @@ const char info[] =
     "    bgcolor          changes bg color:    <bgcolor c=\"#000000\">\n"
     "    txtcolor         changes text color:  <txtcolor c=\"#000000\">\n"
     "    title            changes window title:<title name=\"title\">\n"
+    "    font             changes render font: <font font\"font name\">\n"
     "  Miscellaneous:\n"
     "    line             adds a line:         <line c=\"#ffffff\" l=1>\n"
     "    outline          adds a text outline: <outline  c=\"#ffffff\" t=1>text</outline>\n"
