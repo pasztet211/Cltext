@@ -14,7 +14,7 @@
 #define LINE_SPACING 6
 
 #define VERSION "v0.2.7"
-#define EXTENSION_VER "v0.2.5"
+#define EXTENSION_VER "v0.2.6"
 SDL_Color base_text_color = {255,255,255,255};
 
 int scroll_y = 0;
