@@ -41,7 +41,7 @@ https://github.com/user-attachments/assets/784968ee-e2a0-461a-b78b-e553cf5801bd
 **Option 1: Clone the repo**
 
 1. Clone the repo to `C:\Cltext`
-   * If the SDL2 DLLs (e.g. `SDL2_ttf.dll`) from [`/libs`](./libs) are not in **your system PATH**, move the contents of `/libs` to the main folder.
+   * If the SDL2 DLLs (egg. `SDL2_ttf.dll`) from [`/libs`](./libs) are not in **your system PATH**, move the contents of `/libs` to the main folder.
 
 2. Add `C:\Cltext` to **PATH**[^second]
 
