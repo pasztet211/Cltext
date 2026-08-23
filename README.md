@@ -11,7 +11,7 @@ markup language
 
 ## demo:
 
-https://github.com/user-attachments/assets/8c5f4b83-3029-4f03-8ffb-5ad903d8446a
+https://github.com/user-attachments/assets/784968ee-e2a0-461a-b78b-e553cf5801bd
 
 <details>
 <summary>Code</summary>
@@ -30,7 +30,7 @@ https://github.com/user-attachments/assets/8c5f4b83-3029-4f03-8ffb-5ad903d8446a
 <bold><glitch>it</glitch> is <wave a=0.5>part <big>of</big> an <bounce a=0.5><color c="#0000ff"><outline t=2 c="#ffffff">atom</outline></color></bounce></wave>.</bold>
 <bold><line c="#ffffff" l=3></bold>
 <?== other comment ==?>
-<bold><randomcolor>text</randomcolor></bold> (i gave up)
+<bold><randomcolor>text</randomcolor></bold> <cheer a=2>(i gave up)</cheer>
 <newlines a=27>
 <bold>secret text</bold> (you can scroll)
 ```
