@@ -13,7 +13,7 @@
 #define FONT_SIZE 14
 #define LINE_SPACING 6
 
-#define VERSION "v0.2.6"
+#define VERSION "v0.2.7"
 #define EXTENSION_VER "v0.2.5"
 SDL_Color base_text_color = {255,255,255,255};
 
@@ -338,6 +338,7 @@ int main(int argc, char *argv[]) {
 
                     float scale = 1.0f;
                     float height_b = 0.0f;
+                    float height_c = 0.0f;
                     float shake_offset_x = 0.0f;
                     float shake_offset_y = 0.0f;
                     float glitch_offset_x = 0.0f;
@@ -382,6 +383,14 @@ int main(int argc, char *argv[]) {
                             &glitch_offset_x,
                             &glitch_offset_y,
                             &scale
+                        );
+                    }
+
+                    if (segments[i].style & STYLE_CHEER) {
+                        height_c = cheer_height(
+                            segments[i].cheer_amount,
+                            time,
+                            character_index
                         );
                     }
 
@@ -450,7 +459,8 @@ int main(int argc, char *argv[]) {
                     SDL_Rect rect = {
                         x + shake_offset_x + glitch_offset_x,
                         y + (surface->h - height) / 2
-                            - (int)height_b
+                            - height_b
+                            - height_c
                             + shake_offset_y
                             + glitch_offset_y,
                         width,

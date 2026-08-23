@@ -43,3 +43,13 @@ float glitch_offset(float *offset_x, float *offset_y, float *scale) {
 float spin_angle(float amount, float time) {
     return amount * time * 360.0f;
 }
+
+float cheer_height(float amount, float time, int character_index) 
+{
+    int random_index = character_index + ((character_index * 37) % 10);
+
+    float wave = (sinf(time * 10.0f - random_index * 0.4f) + 1.0f) / 2.0f;
+    wave = wave * wave;
+
+    return 1.0f + amount * 1.5f * wave;
+}

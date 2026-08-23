@@ -71,7 +71,8 @@ static void add_segment(
     SDL_Color *color,
     float spin_amount,
     SDL_Color outline_color,
-    int outline_thickness
+    int outline_thickness,
+    float cheer_amount
 ) {
     if (length == 0) {
         return;
@@ -94,7 +95,8 @@ static void add_segment(
                 &color,
                 spin_amount,
                 outline_color,
-                outline_thickness
+                outline_thickness,
+                cheer_amount
             );
         }
 
@@ -131,6 +133,7 @@ static void add_segment(
     (*segments)[*count].spin_ammount = spin_amount;
     (*segments)[*count].outline_color = outline_color;
     (*segments)[*count].outline_thickness = outline_thickness;
+    (*segments)[*count].cheer_amount = cheer_amount;
 
     (*count)++;
 }
@@ -152,6 +155,7 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SD
     float current_shake_amount = 0.0f;
     float current_glitch_amount = 0.0f;
     float current_spin_amount = 0.0f;
+    float current_cheer_amount = 0.0f;
     int current_size = 0;
     int current_line_length = 10;
     int outline_thickness = 0;
@@ -206,7 +210,8 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SD
             text_color,
             current_spin_amount,
             outline_color,
-            outline_thickness
+            outline_thickness,
+            current_cheer_amount
         );
 
         size_t tag_length = tag_end - pos - 1;
@@ -418,7 +423,8 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SD
                         &line_color,
                         current_spin_amount,
                         outline_color,
-                        outline_thickness
+                        outline_thickness,
+                        current_cheer_amount
                     );
                 }
             }
@@ -487,7 +493,8 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SD
                         text_color,
                         current_spin_amount,
                         outline_color,
-                        outline_thickness
+                        outline_thickness,
+                        current_cheer_amount
                     );
                 }
             }
@@ -516,6 +523,20 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SD
                     (*font_name)[5] = '\0';
                 }
             }
+            else if (strncmp(tag, "cheer", 5) == 0) {
+                current_style |= STYLE_CHEER;
+                current_cheer_amount = 1.0f;
+
+                char *a = strstr(tag, "a=");
+
+                if (a != NULL) {
+                    current_cheer_amount = strtof(a + 2, NULL);
+                }
+            }
+            else if (strcmp(tag, "/cheer") == 0) {
+                current_style &= ~STYLE_CHEER;
+                current_cheer_amount = 0.0f;
+            }
             else {
                 add_segment(
                     segments,
@@ -530,7 +551,8 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SD
                     text_color,
                     current_spin_amount,
                     outline_color,
-                    outline_thickness
+                    outline_thickness,
+                    current_cheer_amount
                 );
             }
 
@@ -575,7 +597,8 @@ int parse_text(const char *input, TextSegment **segments, SDL_Color *bgcolor, SD
         text_color,
         current_spin_amount,
         outline_color,
-        outline_thickness
+        outline_thickness,
+        current_cheer_amount
     );
 
     return count;

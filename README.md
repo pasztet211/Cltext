@@ -2,7 +2,7 @@
 ![SDL2](https://img.shields.io/badge/SDL2-required-green?style=flat-square)
 ![SDL2_ttf](https://img.shields.io/badge/SDL2__ttf-required-green?style=flat-square)
 
-![version](https://img.shields.io/badge/version-v0.2.6-orange?style=flat-square)
+![version](https://img.shields.io/badge/version-v0.2.7-orange?style=flat-square)
 ![extension](https://img.shields.io/badge/extension-v0.2.5-orange?style=flat-square)
 
 # Cltext
@@ -49,7 +49,7 @@ https://github.com/user-attachments/assets/8c5f4b83-3029-4f03-8ffb-5ad903d8446a
 
 https://github.com/user-attachments/assets/ea7cb2ac-ad91-4ebc-a602-1f0678b0b6ae
 
-1. Download [`Cltext-v0.2.6-windows.zip`](./Cltext-v0.2.6-windows.zip)
+1. Download [`Cltext-v0.2.7-windows.zip`](./Cltext-v0.2.7-windows.zip)
    * **If you don't know how to download the .zip:**
    <img width="957" height="117" alt="download help" src="https://github.com/user-attachments/assets/3eb41568-0b2e-4a8f-9ab2-f6c62965e10a"/>
    
@@ -117,6 +117,7 @@ cltext [-h | --help]
 - text that shakes can be made using `<shake a=amount>your text</shake>`
 - to make text glitchy use `<glitch>your text</glitch>`
 - to make text spin use `<spin a=1>your text</spin>`
+- to make text cheer like a crowd use `<cheer a=1>your text</cheer>`
 
 ### Document tags: ![works](https://img.shields.io/badge/status-stable-green?style=flat-square)
 

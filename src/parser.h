@@ -16,7 +16,8 @@ typedef enum {
     STYLE_REVERSE= 1 << 8,
     STYLE_SPIN   = 1 << 9,
     STYLE_OUTLINE= 1 << 10,
-    STYLE_RANDOMCOLOR= 1 << 11
+    STYLE_RANDOMCOLOR= 1 << 11,
+    STYLE_CHEER  = 1 << 12,
 } TextStyle;
 
 typedef struct {
@@ -28,6 +29,7 @@ typedef struct {
     float shake_amount;
     float glitch_amount;
     float spin_ammount;
+    float cheer_amount;
 
     SDL_Color color;
 
